@@ -1,11 +1,12 @@
 import {Provider} from 'react-redux';
 import store from './store';
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Error404 from './helpers/Error';
 import Login from './containers/Login';
 import Home from './containers/Home';
-
+import About from './components/pages/About';
+import Faq from './components/pages/Faq';
 function App() {
   return (
     <Provider store={store}>
@@ -15,6 +16,8 @@ function App() {
             <Route path="*" element={<Error404/>}/>
             <Route exact path='/' element={<Login/>}/>
             <Route exact path='/home' element={<Home/>}/>
+            <Route exact path='/about' element={<About/>}/>
+            <Route exact path='/faq' element={<Faq/>}/>
 
           </Routes>
       </Router>
