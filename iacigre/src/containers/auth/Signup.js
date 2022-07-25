@@ -60,6 +60,7 @@ const Signup = ({
     <PageMain>
       {/* <!-- Section: Design Block --> */}
     <form onSubmit={e=>onSubmit(e)}>
+        <p>Registrarse</p>
         {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
         <div className="row">
             <div className="col-md-6 mb-4">
@@ -147,12 +148,13 @@ const Signup = ({
             </button>
         }
         </div>
-        <p className="secondary">
+        <p className="secondary mt-1">
+            Iniciar sesión &nbsp;
             <Link to="/login">
             Login
           </Link>
         </p>
-        <p className="secondary mt-2">
+        <p className="secondary mt-1">
           Ir a &nbsp;
           <Link to="/">
             Main

@@ -42,6 +42,7 @@ const Login = ({
     <PageMain>
             {/* <!-- Section: Design Block --> */}
       <form onSubmit={e=>onSubmit(e)}>
+        <p>Iniciar Sesión</p>
           {/* <!-- Email input --> */}
         <div className="form-outline mb-4">
           <input 
@@ -56,7 +57,7 @@ const Login = ({
         </div>
 
         {/* <!-- Password input --> */}
-        <div className="form-outline mb-2">
+        <div className="form-outline">
           <input 
                 className="form-control" 
                 name="password"
@@ -68,7 +69,7 @@ const Login = ({
           <label className="form-label" htmlFor="form3Example4">Password</label>                    
         </div>
         <p className="secondary">
-            <Link to="/reset_password">
+            <Link to="/reset_password" className='h6'>
             Forgot your password?
           </Link>
         </p>
@@ -88,13 +89,13 @@ const Login = ({
           </button>                    
         }
         </div>
-        <p className="secondary mt-2">
+        <p className="secondary mt-1">
           Registrarse &nbsp;
           <Link to="/signup">
             Signup
           </Link>
         </p>
-        <p className="secondary mt-2">
+        <p className="secondary">
           Ir a &nbsp;
           <Link to="/">
             Main

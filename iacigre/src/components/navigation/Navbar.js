@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Alert from '../alert';
 import { logout } from '../../redux/actions/auth';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Navigate } from 'react-router'
 
 function Navbar({
   user,
@@ -13,6 +14,7 @@ function Navbar({
     if (e.target.name==="logout"){
       console.log('logout')
       logout()
+      return <Navigate to='/' />;
     }
   }
 

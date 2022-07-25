@@ -17,7 +17,7 @@ const Main = ({
                 Modelos de Intelignecia Artificial aplicados a sistemas eléctricos
             </p>
         </div>
-        {isAuthenticated?
+        {isAuthenticated && user?
         <>
         <p className="secondary mt-2">
             {user.get_full_name}
@@ -39,7 +39,7 @@ const Main = ({
         </p> 
         <p className="secondary mt-2">
           O &nbsp;
-          <Link to="/singup">
+          <Link to="/signup">
             Registrarse
           </Link>
         </p> 
