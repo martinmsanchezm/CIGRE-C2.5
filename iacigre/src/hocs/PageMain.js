@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
 import { useEffect } from "react";
-import '../styles/login.css';
+import '../styles/pageMain.css';
 import video from '../assets/mp4/bg.mp4';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import OnlyAlert from '../containers/OnlyAlert';
+import { check_authenticated, load_user, refresh } from '../redux/actions/auth';
 
-const Login = ({
-    
-}) => {
+const PageMain = (props) => {
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    useEffect(() => {
+        props.refresh()
+        props.load_user()
+        props.check_authenticated()
+      }, []);
 
   return(
       <div className='body-bg'>
@@ -21,20 +24,9 @@ const Login = ({
         <div className="masthead">
             <div className="masthead-content text-white">
                 <div className="container-fluid px-4 px-lg-0">
-                    <h1 className="fst-italic lh-1 mb-4">Bienvenidos al Grupo Cigre C2.5</h1>
-                    <p className="mb-5">Modelos de inteligencia artificial aplicados a sistemas de eléctricos</p>
-                    <p className="">Ingresa para participar</p>
-                    <form>
-                        <div className="mb-3">
-                            <input className="form-control" id="email" type="email" placeholder="Enter email address..." required/>
-                        </div>
-                        <div className="mb-3">
-                            <input className="form-control" id="password" type="password" placeholder="Enter email password..." required/>
-                        </div>
-                        <div className="">
-                            <Link to='/home' className="btn btn-primary p-2 rounded" type="submit">Ingresar</Link>
-                        </div>
-                    </form>
+                    <OnlyAlert />
+                    <ToastContainer autoClose={5000} />
+                    {props.children}
                 </div>
             </div>
         </div>
@@ -51,7 +43,11 @@ const Login = ({
 
 
 const mapStateToProps = state => ({
+
 })
 
 export default connect(mapStateToProps,{
-}) (Login)
+    check_authenticated,
+    load_user,
+    refresh,
+}) (PageMain)

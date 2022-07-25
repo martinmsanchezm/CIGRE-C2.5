@@ -11,7 +11,6 @@ function About({
                 <div className="text-center my-5">
                     <h1 className="fw-bolder mb-3">Our mission is to make building websites easier for everyone.</h1>
                     <p className="lead fw-normal text-muted mb-4">Start Bootstrap was built on the idea that quality, functional website templates and themes should be available to everyone. Use our open source, free products, or support us by purchasing one of our premium products or services.</p>
-                    <a className="btn btn-primary btn-lg" href="#scroll-target">Read our story</a>
                 </div>
             </div>
         </div>

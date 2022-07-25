@@ -72,8 +72,8 @@ const Home = ({
                         <div className="text-center">
                             <h2 className="fw-bolder">Aplicaciones</h2>
                             <p className="lead fw-normal text-muted mb-5">
-                            Las siguientes modelos de IA aplicados a sistemas de eléctricos estamos 
-                            trabajando en el Grupo del Cigre C2.5 Equipo 2.  
+                            En el Grupo Cigre C2.5 Equipo 2 estamos trabajando los siguientes 
+                            modelos de IA aplicados a sistemas de eléctricos.   
                             </p>
                         </div>
                     </div>

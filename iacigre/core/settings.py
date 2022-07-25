@@ -60,6 +60,7 @@ THIRD_PARTY_APP = [
 
 PROJECT_APP = [
     'apps.user',
+    'apps.projects',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + PROJECT_APP

@@ -6,7 +6,7 @@ export class Error extends Component {
     return (
         <Layout>
         Error404
-    </Layout>
+        </Layout>
     )
   }
 }
