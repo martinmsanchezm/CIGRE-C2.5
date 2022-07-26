@@ -30,4 +30,4 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 
 // listas de procesos
-export const VIEW_NEW_PROCESS = "VIEW_NEW_PROCESS";
+export const VIEW_NEW_PROJECT = "VIEW_NEW_PROJECT";

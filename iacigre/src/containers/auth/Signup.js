@@ -150,13 +150,13 @@ const Signup = ({
         </div>
         <p className="secondary mt-1">
             Iniciar sesión &nbsp;
-            <Link to="/login">
+            <Link to="/login" className='text-decoration-none'>
             Login
           </Link>
         </p>
         <p className="secondary mt-1">
           Ir a &nbsp;
-          <Link to="/">
+          <Link to="/" className='text-decoration-none'>
             Main
           </Link>
         </p>

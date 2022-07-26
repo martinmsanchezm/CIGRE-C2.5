@@ -68,7 +68,7 @@ const Login = ({
                 />
           <label className="form-label" htmlFor="form3Example4">Password</label>                    
         </div>
-        <p className="secondary">
+        <p className="secondary m-1">
             <Link to="/reset_password" className='h6'>
             Forgot your password?
           </Link>
@@ -76,7 +76,7 @@ const Login = ({
         <div>
         {/* <!-- Submit button --> */}
         {loading?
-          <button type="submit" className="btn btn-primary btn-block btn-lg">
+          <button type="submit" className="btn btn-primary btn-block btn-lg m-0">
             <Oval
             color="#fff"
             width={20}
@@ -84,20 +84,20 @@ const Login = ({
             />
           </button>
           :
-          <button type="submit" className="btn btn-primary btn-block btn-lg">
+          <button type="submit" className="btn btn-primary btn-block btn-lg mb-2">
             Login
           </button>                    
         }
         </div>
-        <p className="secondary mt-1">
-          Registrarse &nbsp;
-          <Link to="/signup">
-            Signup
+        <p className="secondary m-0">
+          No tienes cuenta &nbsp;
+          <Link to="/signup" className='text-decoration-none'>
+            Registrate
           </Link>
         </p>
-        <p className="secondary">
+        <p className="secondary m-0">
           Ir a &nbsp;
-          <Link to="/">
+          <Link to="/" className='text-decoration-none'>
             Main
           </Link>
         </p>

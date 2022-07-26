@@ -63,13 +63,13 @@ const  ResetPassword = ({
             </button>
             :
             <button type="submit" className="btn btn-primary btn-block btn-lg">
-            Login
+            Send Email
             </button>                    
         }
         </div>
         <p className="secondary mt-2">
           Ir a &nbsp;
-          <Link to="/">
+          <Link to="/" className='text-decoration-none'>
             Main
           </Link>
         </p>

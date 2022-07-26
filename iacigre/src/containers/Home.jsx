@@ -12,7 +12,7 @@ const Home = ({
 }) => {
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   return(
@@ -68,14 +68,15 @@ const Home = ({
         <section className="py-3">
             <div className="container px-5 my-5">
                 <div className="row gx-5 justify-content-center">
-                    <div className="col-lg-8 col-xl-6">
+                    <div className="col-lg-12 col-xl-9">
                         <div className="text-center">
-                            <h2 className="fw-bolder">Aplicaciones</h2>
+                            <h2 className="fw-bolder">Proyectos</h2>
                             <p className="lead fw-normal text-muted mb-5">
                             En el Grupo Cigre C2.5 Equipo 2 estamos trabajando los siguientes 
-                            modelos de IA aplicados a sistemas de eléctricos.   
+                            modelos de IA aplicados a sistemas de eléctricos. También puedes crear un &nbsp;
+                            <a className="mb-5 text-decoration-none" href="#features">Nuevo Proyecto</a>
                             </p>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <Projects />

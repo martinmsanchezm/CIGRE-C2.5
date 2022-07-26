@@ -1,11 +1,23 @@
 import PageMain from '../hocs/PageMain'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Dropdown from 'react-bootstrap/Dropdown';
+import { logout } from '../redux/actions/auth';
+import { Navigate } from 'react-router';
 
 const Main = ({
     isAuthenticated,
-    user
+    user,
+    logout,
     }) =>{
+
+      const onClick = (e) =>{
+        if (e.target.name==="logout"){
+          console.log('logout')
+          logout()
+          return <Navigate to='/' />;
+        }
+      }
 
     return (
       <PageMain>
@@ -20,12 +32,24 @@ const Main = ({
         {isAuthenticated && user?
         <>
         <p className="secondary mt-2">
-            {user.get_full_name}
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" bg="dark" id="dropdown-basic">
+                  {user.get_full_name}
+              </Dropdown.Toggle>
+              <Dropdown.Menu onClick={onClick}>
+                <Dropdown.Item name='profile'>
+                  Profile
+                </Dropdown.Item>
+                <Dropdown.Item name='logout'>
+                  Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
         </p>
         <p className="secondary mt-2">
-            Ir a &nbsp;
+            &nbsp;Ir a &nbsp;
             <Link to="/home">
-            Home
+            <button className='btn btn-success'>Home</button>
             </Link>
         </p>
         </>
@@ -33,14 +57,14 @@ const Main = ({
         <>
         <p className="secondary mt-2">
           Ir a &nbsp;
-          <Link to="/login">
+          <Link to="/login" className='text-decoration-none'>
             Login
           </Link>
         </p> 
         <p className="secondary mt-2">
-          O &nbsp;
-          <Link to="/signup">
-            Registrarse
+          O puedes &nbsp;
+          <Link to="/signup" className='text-decoration-none'>
+            Registrarte
           </Link>
         </p> 
         </>          
@@ -57,5 +81,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps,{
-    
+    logout,
 }) (Main)
