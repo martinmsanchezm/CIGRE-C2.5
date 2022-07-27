@@ -1,79 +1,72 @@
 import { connect } from 'react-redux';
+import { edit_project, post_project } from '../../redux/actions/projects';
 import { Link } from "react-router-dom";
+import '../../styles/card.css';
 function Projects({
+    list_projects,
+    edit_project,
+    post_project
 }) {
+
+    const onClick = (prj) =>{
+        edit_project(prj)
+    }
+
+    const onSelect = (prj) =>{
+        post_project(prj)
+    }
+
+
   return (
     <div className="row gx-5">
-    <div className="col-lg-4 mb-5">
-        <div className="card h-100 shadow border-0">
-            <img className="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
-            <div className="card-body p-4">
-                <div className="badge bg-primary bg-gradient rounded-pill mb-2">Eléctricos</div>
-                <a className="text-decoration-none link-dark stretched-link" href="#!"><h5 className="card-title mb-3">Blog post title</h5></a>
-                <p className="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div className="card-footer p-4 pt-0 bg-transparent border-top-0">
-                <div className="d-flex align-items-end justify-content-between">
-                    <div className="d-flex align-items-center">
-                        <img className="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                        <div className="small">
-                            <div className="fw-bold">Kelly Rowan</div>
-                            <div className="text-muted">March 12, 2022 &middot; 6 min read</div>
+        {list_projects?
+            list_projects.map((prj)=>(
+            <div key={prj.id} className="col-lg-4 mb-5">
+                <div id="card" className="card h-100 shadow border-0" onClick={()=>onSelect(prj)}>
+                    <Link to='/post' className='text-decoration-none'>
+                    <img className="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                    <div className="card-body p-4">
+                        <div className="badge bg-primary bg-gradient rounded-pill mb-2">{prj.category}</div>
+                        <h5 className="card-title mb-3 text-dark">{prj.title}</h5>
+                        <p className="card-text mb-0 text-dark">{prj.desc}</p>
+                    </div>
+                    </Link>
+                    <div className="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div className='p-3'></div>
+                        <div id="card-footer" className="d-flex align-items-end justify-content-between">
+                            <div className="d-flex align-items-center mb-2">                                
+                                <img className="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                <div className="small align-items-center">
+                                    <div className="fw-bold">{prj.author}</div>
+                                    <div className="text-muted">{prj.updated_at}</div>
+                                </div>                                
+                                {prj.status?
+                                    <div className="ms-xl-4">
+                                        <button 
+                                            className='btn btn-link align-items-end text-decoration-none'
+                                            onClick={()=>onClick(prj)}
+                                            >Editar
+                                        </button>
+                                    </div>
+                                    :null
+                                }                                
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
-        </div>
-    </div>
-    <div className="col-lg-4 mb-5">
-        <div className="card h-100 shadow border-0">
-            <img className="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
-            <div className="card-body p-4">
-                <div className="badge bg-primary bg-gradient rounded-pill mb-2">Energéticos</div>
-                <a className="text-decoration-none link-dark stretched-link" href="#!"><h5 className="card-title mb-3">Another blog post title</h5></a>
-                <p className="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div className="card-footer p-4 pt-0 bg-transparent border-top-0">
-                <div className="d-flex align-items-end justify-content-between">
-                    <div className="d-flex align-items-center">
-                        <img className="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                        <div className="small">
-                            <div className="fw-bold">Josiah Barclay</div>
-                            <div className="text-muted">March 23, 2022 &middot; 4 min read</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div className="col-lg-4 mb-5">
-        <div className="card h-100 shadow border-0">
-            <img className="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
-            <div className="card-body p-4">
-                <div className="badge bg-primary bg-gradient rounded-pill mb-2">Eléctricos</div>
-                <a className="text-decoration-none link-dark stretched-link" href="#!"><h5 className="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                <p className="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-            <div className="card-footer p-4 pt-0 bg-transparent border-top-0">
-                <div className="d-flex align-items-end justify-content-between">
-                    <div className="d-flex align-items-center">
-                        <img className="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                        <div className="small">
-                            <div className="fw-bold">Evelyn Martinez</div>
-                            <div className="text-muted">April 2, 2022 &middot; 10 min read</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            ))
+            :
+            <></>
+        }
 </div>
   )
 }
 const mapStateToProps = state => ({
-
+    list_projects: state.Projects.list_projects,
 })
 export default connect(mapStateToProps, {
-
+    edit_project,
+    post_project
 })(Projects)
 

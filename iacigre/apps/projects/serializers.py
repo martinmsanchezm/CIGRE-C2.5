@@ -8,6 +8,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'desc',
+            'category',
             'author',
             'status',
             'created_at',

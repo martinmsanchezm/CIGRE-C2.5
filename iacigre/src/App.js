@@ -14,6 +14,7 @@ import Signup from './containers/auth/Signup';
 import Activate from './containers/auth/Activate';
 import ResetPassword from './containers/auth/ResetPassword';
 import ResetPasswordConfirm from './containers/auth/ResetPasswordConfirm';
+import PostProjet from './components/pages/PostProjet';
 function App() {
   return (
     <Provider store={store}>
@@ -25,6 +26,7 @@ function App() {
             <Route exact path='/home' element={<Home/>}/>
             <Route exact path='/about' element={<About/>}/>
             <Route exact path='/faq' element={<Faq/>}/>
+            <Route exact path='/post' element={<PostProjet/>}/>
 
             {/* Authentication */} 
             <Route exact path='/login' element={<Login/>}/>

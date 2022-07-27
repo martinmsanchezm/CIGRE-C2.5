@@ -1,0 +1,7 @@
+#card {
+    position: relative;
+}
+#card-footer {
+    position: absolute;
+    bottom: 0;
+}

@@ -5,13 +5,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 import { check_authenticated, load_user, refresh } from '../redux/actions/auth';
-
-const Layout = (props) => {
+import { get_projects } from '../redux/actions/projects';
+const Layout = (props, user) => {
 
     useEffect(() => {
         props.refresh()
         props.load_user()
         props.check_authenticated()
+        props.get_projects()
       }, []);
 
     return(
@@ -24,9 +25,9 @@ const Layout = (props) => {
     )
 }
 
-
 export default connect(null, {
     check_authenticated,
     load_user,
     refresh,
+    get_projects,
 }) (Layout)
