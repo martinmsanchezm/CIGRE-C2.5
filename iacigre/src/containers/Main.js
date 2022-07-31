@@ -12,11 +12,7 @@ const Main = ({
     }) =>{
 
       const onClick = (e) =>{
-        if (e.target.name==="logout"){
-          console.log('logout')
-          logout()
-          return <Navigate to='/' />;
-        }
+        logout()
       }
 
     return (
@@ -26,26 +22,24 @@ const Main = ({
         <div className="my-5 text-center text-xl-start">
             <h1 className="display-5 fw-bolder text-white mb-2">Bienvenidos al Cigré Grupo C2.5</h1>
             <p className="lead fw-normal text-white-50 mb-4">
-                Modelos de Intelignecia Artificial aplicados a sistemas eléctricos
+                Modelos de Inteligencia Artificial aplicados en Sistemas Eléctricos o Sistemas Afines
             </p>
         </div>
         {isAuthenticated && user?
         <>
-        <p className="secondary mt-2">
-            <Dropdown>
-              <Dropdown.Toggle variant="dark" bg="dark" id="dropdown-basic">
-                  {user.get_full_name}
-              </Dropdown.Toggle>
-              <Dropdown.Menu onClick={onClick}>
-                <Dropdown.Item name='profile'>
-                  Profile
-                </Dropdown.Item>
-                <Dropdown.Item name='logout'>
-                  Logout
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-        </p>
+          <Dropdown>
+            <Dropdown.Toggle variant="dark" bg="dark" id="dropdown-basic">
+                {user.get_full_name}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item name='profile'>
+                <Link to='/profile' id="RouterNavLink" className='text-decoration-none'>Profile</Link>                  
+              </Dropdown.Item>
+              <Dropdown.Item name='logout'>
+                <Link to='/' id="RouterNavLink" className='text-decoration-none' onClick={onClick}>Logout</Link>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         <p className="secondary mt-2">
             &nbsp;Ir a &nbsp;
             <Link to="/home">

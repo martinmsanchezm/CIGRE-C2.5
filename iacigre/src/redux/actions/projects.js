@@ -119,7 +119,7 @@ export const add_edit_project = (
             dispatch({
                 type: EDIT_PROJECTS_SUCCESS
             });
-            dispatch(setAlert(true,res.data.res,'#8bf282'))
+            dispatch(setAlert(true,res.data.res,'#8bf282'));
         } else {
             dispatch({
                 type: EDIT_PROJECTS_FAIL

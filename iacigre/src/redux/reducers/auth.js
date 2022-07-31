@@ -32,7 +32,7 @@ const initialState = {
     loading: false,
     inSign: false,
     loginStatus: false,
-    signupStatus: false
+    signupStatus: false,
 }
 
 export default function Auth(state = initialState, action) {

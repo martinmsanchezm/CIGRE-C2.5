@@ -111,7 +111,7 @@ function NewProjects({
                                 <Dropdown.Item name="Otros">Otros</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <p>Categoria de los datos</p>
+                        <p>Categoría de los datos</p>
                     </div>                    
                     <div className="form-outline mb-4">
                         <textarea 

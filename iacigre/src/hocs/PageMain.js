@@ -5,8 +5,6 @@ import video from '../assets/mp4/bg.mp4';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import OnlyAlert from '../containers/OnlyAlert';
 import { check_authenticated, load_user, refresh } from '../redux/actions/auth';
 
@@ -14,8 +12,8 @@ const PageMain = (props) => {
 
     useEffect(() => {
         props.refresh()
-        props.load_user()
         props.check_authenticated()
+        props.load_user()
       }, []);
 
   return(
@@ -25,7 +23,6 @@ const PageMain = (props) => {
             <div className="masthead-content text-white">
                 <div className="container-fluid px-4 px-lg-0">
                     <OnlyAlert />
-                    <ToastContainer autoClose={5000} />
                     {props.children}
                 </div>
             </div>

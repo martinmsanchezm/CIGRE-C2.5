@@ -77,10 +77,10 @@ const Home = ({
                 <div className="row gx-5 justify-content-center">
                     <div className="col-lg-12 col-xl-9">
                         <div className="text-center">
-                            <h2 className="fw-bolder">Proyectos</h2>
+                            <h2 className="fw-bolder">Nuestros Proyectos</h2>
                             <p className="lead fw-normal text-muted mb-5">
                                 En el Grupo Cigré C2.5 Equipo 2 estamos trabajando los siguientes 
-                                modelos de IA aplicados a sistemas de eléctricos. También puedes crear un
+                                modelos de IA aplicados a sistemas eléctricos. También puedes crear un
                                 <button 
                                     type="button" 
                                     onClick={onClick} 

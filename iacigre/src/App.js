@@ -5,9 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Error404 from './helpers/Error';
 import Home from './containers/Home';
 import About from './components/pages/About';
-import Faq from './components/pages/Faq';
 import Main from './containers/Main';
-
+import Profile from './components/pages/Profile';
 // Authentication
 import Login from './containers/auth/Login';
 import Signup from './containers/auth/Signup';
@@ -25,8 +24,8 @@ function App() {
             <Route exact path='/' element={<Main/>}/>
             <Route exact path='/home' element={<Home/>}/>
             <Route exact path='/about' element={<About/>}/>
-            <Route exact path='/faq' element={<Faq/>}/>
             <Route exact path='/post' element={<PostProjet/>}/>
+            <Route exact path='/profile' element={<Profile/>}/>
 
             {/* Authentication */} 
             <Route exact path='/login' element={<Login/>}/>

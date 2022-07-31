@@ -12,7 +12,7 @@ class ListProjectsView(APIView):
     def post(self, request, format=None):
         user_id = self.request.user.id
         try:
-            result = ProjectsSerializer(Projects.objects.all().order_by('-created_at'), many=True)
+            result = ProjectsSerializer(Projects.objects.all().order_by('-updated_at'), many=True)
             result = result.data
             for data in result:                
                 user = User.objects.get(id=data.get('author'))
