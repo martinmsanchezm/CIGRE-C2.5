@@ -3,7 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ProjectsSerializer
 from .models import Projects
+from apps.user_profile import models, serializers
+from os import path, remove
 from django.contrib.auth import get_user_model
+from django.core.files.storage import FileSystemStorage
+from datetime import datetime
 User = get_user_model()
 
 # Create your views here.
@@ -16,8 +20,17 @@ class ListProjectsView(APIView):
             result = result.data
             for data in result:                
                 user = User.objects.get(id=data.get('author'))
-                data['author'] = user.first_name+' '+user.last_name
+                profile = models.User_Profile.objects.filter(user_id=data.get('author'))
+                if profile.exists():
+                    user_profile = serializers.User_ProfileSerializer(profile, many=True).data[0]
+                else:
+                    user_profile = None
+                data['author'] = {
+                    'name':user.first_name+' '+user.last_name, 
+                    'user_profile':user_profile
+                }
                 data['updated_at'] = data['updated_at'].split('T')[0]
+                data['created_at'] = data['created_at'].split('T')[0]
                 data['title'] = data['title']
                 data['status'] = 1 if user_id==user.id else 0
             return Response(
@@ -47,7 +60,7 @@ class AddNewProject(APIView):
             )
         #crear project
         try:
-            project = Projects.objects.create(
+            Projects.objects.create(
                 title=title,
                 slug=title+'_',
                 desc=desc,
@@ -96,6 +109,10 @@ class DeleteProject(APIView):
         #editar project
         try:
             project = Projects.objects.get(id=data.get('id'))
+            fs = FileSystemStorage(location="media/photos/project/")
+            photo_name = str(project.photo).split('/')[-1]
+            if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
+                remove(r'%s/%s'%(fs.location, photo_name))
             project.delete()
             return Response(
                 {'res': "Se elimina el proyecto correctamente"},
@@ -104,5 +121,37 @@ class DeleteProject(APIView):
         except:
             return Response(
                 {'error': 'Error al crear el proyecto en la base de datos'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+class ImageProject(APIView):
+    def post(self, request, format=None):
+        file = self.request.data
+        try:
+            fs = FileSystemStorage(location="media/photos/project/")
+            ext_file = file['file'].name.split('.')[-1].lower()
+            if (file['action']=='edit'):
+                project = Projects.objects.filter(id=file['project_id'])
+                res = 'Se modifica el proyecto correctamente'
+                name_id = file['project_id']
+            else:
+                project = Projects.objects.filter(title=file['project_id'])
+                name_id = project[0].id
+                res = 'Se crea el proyecto correctamente'
+            photo_name = str(project[0].photo).split('/')[-1]
+            if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
+                remove(r'%s/%s'%(fs.location, photo_name))
+            name = '%s_%s.%s'%(name_id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
+            project.update(
+                photo='photos/project/%s'%(name)
+            )
+            fs.save(name, file['file'])
+            return Response(
+                {'res': res},
+                status=status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {'error': 'Error al actualizar la imagen de perfil'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

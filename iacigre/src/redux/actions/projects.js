@@ -13,7 +13,9 @@ import {
     EDIT_PROJECTS_FAIL,
     DELETE_PROJECTS_SUCCESS,
     DELETE_PROJECTS_FAIL,
-    POST_PROJECT
+    POST_PROJECT,
+    IMAGE_PROJECT_SUCCESS,
+    IMAGE_PROJECT_FAIL
 } from './types';
 import { setAlert } from './alert';
 import axios from 'axios'
@@ -171,7 +173,7 @@ export const delete_edit_project = (
             dispatch({
                 type: DELETE_PROJECTS_FAIL
             });
-            dispatch(setAlert(true,'Error al editar el proyecto', '#fcbfbf'));
+            dispatch(setAlert(true,'Error al eliminar el proyecto', '#fcbfbf'));
         }
         dispatch({
             type: REMOVE_AUTH_LOADING
@@ -247,9 +249,56 @@ export const edit_project = (prj) => dispatch => {
     });
 }
 
-export const post_project = (prj) => dispatch => {
+export const set_post_project = (prj) => dispatch => {
     dispatch({
         type: POST_PROJECT,
         payload: prj
     });
+}
+
+export const send_image = (image, project_id, action) => async dispatch => {
+
+    dispatch({
+        type: SET_AUTH_LOADING
+    });
+
+    let data = new FormData();
+    data.append('file', image, image.name);
+    data.append('project_id', project_id);
+    data.append('action', action);
+
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+            'Authorization': `JWT ${localStorage.getItem('access')}`
+        }
+    };
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/projects/image-project`, data, config);
+        if (res.status === 200) {
+            dispatch({
+                type: IMAGE_PROJECT_SUCCESS,
+                payload: res.data
+            });
+            dispatch(setAlert(true,res.data.res,'#8bf282'));
+        } else {
+            dispatch({
+                type: IMAGE_PROJECT_FAIL
+            });
+            dispatch(setAlert(true,'Error al cargar la imagen', '#fcbfbf'));
+        }
+        dispatch({
+            type: REMOVE_AUTH_LOADING
+        });
+    } catch(err) {
+        dispatch({
+            type: IMAGE_PROJECT_FAIL
+        });
+        dispatch({
+            type: REMOVE_AUTH_LOADING
+        });
+        dispatch(setAlert(true,err.request.response, '#fcbfbf'));
+    }
 }

@@ -5,6 +5,11 @@ import { get_users } from '../../redux/actions/profile';
 import mision from '../../assets/img/mision.PNG';
 import create_grupo from '../../assets/img/create_grupo.PNG';
 
+const style = {
+    borderRadius:"12px", 
+    border:"5px", 
+};
+
 function About({
     get_users,
     users
@@ -18,9 +23,10 @@ function About({
         <div className="row justify-content-center">
             <div className="col-lg-8 col-xxl-12">
                 <div className="text-center my-5">
-                    <h1 className="fw-bolder mb-3">Creación de aplicaciones de 
+                    <h1 className="display-5 fw-bolder mb-3">Creación de aplicaciones de 
                         inteligencia artificial en sistemas eléctricos y sistemas afines
                     </h1>
+                    <hr className="my-2" />  
                     <p className="lead fw-normal text-muted mb-4">
                     La inteligencia artificial ha tenido un impacto considerable en nuestra vida cotidiana, 
                     desde las fotos que toma nuestro celular hasta los vehículos que nos transportan, 

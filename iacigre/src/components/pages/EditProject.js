@@ -4,7 +4,8 @@ import {Set_view_edit_project,
         get_projects,
         reset_project_status,
         add_edit_project,
-        delete_edit_project
+        delete_edit_project,
+        send_image,
 } from '../../redux/actions/projects';
 import { useRef, useState} from 'react';
 import { Oval } from 'react-loader-spinner';
@@ -20,10 +21,13 @@ function NewProjects({
     edit_project,
     add_edit_project,
     delete_edit_project,
+    send_image
 }) {
 
     const title = useRef(null);
     const desc = useRef(null);
+    const image = useRef(null);
+
 
     const [newCategory, setnewCategory] = useState("Eléctricos");
     const [editCategory, seteditCategory] = useState(false);
@@ -41,6 +45,11 @@ function NewProjects({
             title.current.value, 
             desc.current.value, 
             category
+        )
+        send_image(
+            image.current.files[0],
+            edit_project.id,
+            "edit"
         )
     }
 
@@ -76,7 +85,6 @@ function NewProjects({
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
-            centered
         >
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -84,7 +92,11 @@ function NewProjects({
                 </Modal.Title>
             </Modal.Header>
                 <Modal.Body>
-                <form>
+                <form> 
+                    <h6>Upload a photo...</h6>                
+                    <div className="ml-2 mr-2 col-lg-12 mb-4">
+                        <input ref={image} type="file" className="form-control"/>
+                    </div>                   
                     <div className="form-outline mb-4">
                         <input 
                                 className="form-control" 
@@ -92,7 +104,7 @@ function NewProjects({
                                 ref={title}
                                 defaultValue={edit_project.title}
                                 type="text"
-                                maxLength={100}
+                                maxLength={80}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Título</label>
@@ -113,18 +125,18 @@ function NewProjects({
                         </Dropdown>
                         <p>Categoría de los datos</p>
                     </div>                    
-                    <div className="form-outline mb-4">
+                    <div className="form-outline mb-2">
                         <textarea 
                                 className="form-control" 
                                 name="desc"
                                 ref={desc}
                                 defaultValue={edit_project.desc}
                                 type="text-area"
-                                maxLength={490}
+                                maxLength={180}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Descripción del proyecto</label>
-                    </div>
+                    </div>                    
                     <div className="d-flex flex-row-reverse">                        
                         {loading?
                             <button className="btn btn-primary btn-block btn-lg mr-5">
@@ -170,6 +182,7 @@ export default connect(mapStateToProps, {
     get_projects,
     reset_project_status,
     add_edit_project,
-    delete_edit_project
+    delete_edit_project,
+    send_image
 })(NewProjects)
 

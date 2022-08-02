@@ -46,12 +46,14 @@ class EditUserProfile(APIView):
                     user_id=user_req,
                     user_company=data['user_company'],
                     slug='_%s'%user_req.id,
+                    photo=''
                 )
             else:
                 User_Profile.objects.create(
                     user_id=user_req,
                     slug='_%s'%user_req.id,
                     user_company=data['user_company'],
+                    photo=''
                 )
             user.update(
                     first_name=data['first_name'],

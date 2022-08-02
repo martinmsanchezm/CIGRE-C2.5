@@ -57,7 +57,10 @@ function Profile({
         <div className="card-header ml-5 mr-5">
             <div className="text-center">
                 <h1 className='m-2'>Editar Perfil</h1>
-                  <img className="img-fluid rounded-circle mb-4 px-4" src={profile.photo? profile.photo:"https://dummyimage.com/150x150/ced4da/6c757d"} alt="..." style={{width:'15rem', height:'12rem'}} />
+                <img className="img-fluid rounded-circle mb-4 px-4" 
+                    src={profile.photo? profile.photo:"https://dummyimage.com/150x150/ced4da/6c757d"} 
+                    alt="..." 
+                    style={{width:'15rem', height:'12rem'}} />
                 <h6>Upload a photo...</h6>                
                 <div className="ml-2 mr-2 col-lg-12">
                     <input ref={profile_img} type="file" className="form-control"/>

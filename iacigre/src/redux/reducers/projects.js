@@ -73,13 +73,12 @@ export default function Projects(state = initialState, action) {
                 ...state,
                 edit_project: payload,
                 edit_show: true,
-                edit_change: true,
             };
         case POST_PROJECT:
+            localStorage.setItem("post_project", JSON.stringify(payload));
             return {
                 ...state,
                 post_project: payload,
-                post_status: true
             };
         default:
             return state

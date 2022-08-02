@@ -61,12 +61,14 @@ THIRD_PARTY_APP = [
 PROJECT_APP = [
     'apps.user',
     'apps.projects',
-    'apps.user_profile'
+    'apps.user_profile',
+    'apps.section'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + PROJECT_APP
 
 CKEDITOR_UPLOAD_PATH = "/media/"
+
 
 MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',

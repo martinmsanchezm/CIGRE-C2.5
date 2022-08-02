@@ -3,7 +3,8 @@ import {Modal, Dropdown} from 'react-bootstrap';
 import {Set_view_new_project, 
         reset_project_status, 
         add_new_project,
-        get_projects
+        get_projects,
+        send_image
 } from '../../redux/actions/projects';
 import { useRef, useState} from 'react';
 import { Oval } from 'react-loader-spinner';
@@ -16,10 +17,12 @@ function NewProjects({
     reset_project_status,
     add_new_project,
     get_projects,
+    send_image
 }) {
 
     const title = useRef(null);
     const desc = useRef(null);
+    const image = useRef(null);
     const [newCategory, setnewCategory] = useState("Eléctricos");
     
     const onSubmit = e =>{
@@ -31,17 +34,22 @@ function NewProjects({
             "",
             0
         )
+        send_image(
+            image.current.files[0],
+            title.current.value,
+            "add"
+        )
     }
 
     const onSelect = e =>{
-    e.preventDefault();
-    setnewCategory(e.target.name)
+        e.preventDefault();
+        setnewCategory(e.target.name)
     }    
 
     if (!loading && newPrjStatus){
-    reset_project_status()
-    Set_view_new_project(false)
-    get_projects()
+        reset_project_status()
+        Set_view_new_project(false)
+        get_projects()
     }
 
     const handleClose = (e) =>{
@@ -55,7 +63,6 @@ function NewProjects({
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
-            centered
         >
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -64,12 +71,16 @@ function NewProjects({
             </Modal.Header>
                 <Modal.Body>
                 <form onSubmit={e=>onSubmit(e)}>
+                    <h6>Upload a photo...</h6>                
+                    <div className="ml-2 mr-2 col-lg-12 mb-4">
+                        <input ref={image} type="file" className="form-control"/>
+                    </div>
                     <div className="form-outline mb-4">
                         <input 
                                 className="form-control" 
                                 ref={title}
                                 type="text"
-                                maxLength={100}
+                                maxLength={80}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Título</label>
@@ -89,16 +100,16 @@ function NewProjects({
                         </Dropdown>
                         <p>Categoría de los datos</p>
                     </div>                    
-                    <div className="form-outline mb-4">
+                    <div className="form-outline mb-2">
                         <textarea 
                                 className="form-control" 
                                 ref={desc}
                                 type="text-area"
-                                maxLength={490}
+                                maxLength={180}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Descripción del proyecto</label>
-                    </div>
+                    </div>                    
                     <div>
                         {/* <!-- Submit button --> */}
                         {loading?
@@ -131,5 +142,6 @@ export default connect(mapStateToProps, {
     reset_project_status,
     add_new_project,
     get_projects,
+    send_image
 })(NewProjects)
 
