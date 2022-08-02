@@ -26,3 +26,6 @@ yarn-error.log*
 
 #image and videos
 /media
+
+# statics files
+/statics
