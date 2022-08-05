@@ -4,7 +4,7 @@ from .models import User_Profile
 
 class ProjectsAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
-        return False
+        return request.user.is_superuser
     
     list_display = ('id', 'user_id', 'user_company' )
     list_display_links = ('id', 'user_id', )

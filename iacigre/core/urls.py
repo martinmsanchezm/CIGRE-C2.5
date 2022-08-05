@@ -12,6 +12,7 @@ urlpatterns = [
      path('api/projects/', include('apps.projects.urls')),
      path('api/user_profile/', include('apps.user_profile.urls')),
      path('api/section/', include('apps.section.urls')),
+     path('api/unite/', include('apps.unite.urls')),
 
 
     path('admin/', admin.site.urls),

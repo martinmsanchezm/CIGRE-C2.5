@@ -11,10 +11,21 @@ from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 User = get_user_model()
 
+
+# validate_activate
+def validate_activate(user_id):
+    if (user_id==8):
+        return Response(
+            {'error': 'Usuario no tiene permisos'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    return None
+
 class AddSection(APIView):
     def post(self, request, format=None):
-        data = self.request.data
         user = self.request.user
+        validate_activate(user.id)
+        data = self.request.data
         try:
             project = Projects.objects.get(id=data['post_prj_id'])
             section = Section.objects.create(
@@ -47,6 +58,8 @@ class AddSection(APIView):
 
 class EditSection(APIView):
     def post(self, request, format=None):
+        user = self.request.user
+        validate_activate(user.id)
         data = self.request.data
         try:
             section = Section.objects.filter(id=data['section_id'])
@@ -84,11 +97,8 @@ class EditSection(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-
-
 class ListSectionView(APIView):
     def post(self, request, format=None):
-        user_id = self.request.user.id
         data = self.request.data
         try:
             result = SectionSerializer(Section.objects.filter(project=data['project_id']).order_by('created_at'), many=True)
@@ -105,6 +115,8 @@ class ListSectionView(APIView):
 
 class DeleteSection(APIView):
     def post(self, request, format=None):
+        user = self.request.user
+        validate_activate(user.id)
         data = self.request.data
         #editar project
         try:

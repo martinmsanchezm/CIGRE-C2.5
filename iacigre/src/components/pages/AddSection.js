@@ -66,7 +66,6 @@ function AddSection({
             backdrop="static"
             keyboard={false}
             size="lg"
-            centered
         >
             <Modal.Header closeButton>
                 <Modal.Title>

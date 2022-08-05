@@ -5,11 +5,6 @@ import { get_users } from '../../redux/actions/profile';
 import mision from '../../assets/img/mision.PNG';
 import create_grupo from '../../assets/img/create_grupo.PNG';
 
-const style = {
-    borderRadius:"12px", 
-    border:"5px", 
-};
-
 function About({
     get_users,
     users
@@ -47,7 +42,7 @@ function About({
                 <div className="col-lg-6">
                     <h2 className="fw-bolder">Creación del grupo</h2>
                     <p className="lead fw-normal text-muted mb-0">
-                        El grupo Cigré C2.5 inicio desde XM en busca de abordar las problemáticas 
+                        El grupo CIGRE C2.5 inicio desde XM en busca de abordar las problemáticas 
                         que tenemos en el Sistema Eléctrico Colombiano mediante modelos de Inteligencia 
                         Artificial. Para esto se realizo una invitación a todas las personas que participan 
                         en el sector eléctrico o afines para que puedan aportar de forma activa en 
@@ -64,7 +59,7 @@ function About({
                 <div className="col-lg-6">
                     <h2 className="fw-bolder">Misión del equipo</h2>
                     <p className="lead fw-normal text-muted mb-0">
-                        El Grupo Cigré C2.5 tiene como misión realizar un espacio para compartir conocimiento donde 
+                        El Grupo CIGRE C2.5 tiene como misión realizar un espacio para compartir conocimiento donde 
                         se encuentren modelos de inteligencia artificial aplicados a sistemas eléctricos. 
                         Este espácio contendrá datos, modelos, repositorios y ejemplos del entrenamiento realizados 
                         a los modelos con los respectivos resultados obtenidos. Estos modelos estarán a disposición de 

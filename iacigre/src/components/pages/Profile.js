@@ -21,7 +21,7 @@ function Profile({
     imageStatus,
     reset_image_status,
     get_profile,
-    profile
+    profile,
 }) {
 
     const first_name = useRef(null);
@@ -44,7 +44,7 @@ function Profile({
         reset_edit_status();
     }
 
-    if (!loading && imageStatus){
+    if (!loading && imageStatus && user && user.id!==8){
       reset_image_status();
       get_profile();
   }

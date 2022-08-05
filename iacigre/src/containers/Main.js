@@ -1,17 +1,25 @@
 import PageMain from '../hocs/PageMain'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown';
-import { logout } from '../redux/actions/auth';
+import { login, set_login_status } from '../redux/actions/auth';
+import { check_authenticated, load_user, refresh } from '../redux/actions/auth';
 
 const Main = ({
     isAuthenticated,
     user,
-    logout,
+    login,
+    load_user,
+    check_authenticated,
+    refresh,
+    loginStatus,
+    set_login_status
     }) =>{
 
-      const onClick = (e) =>{
-        logout()
+      if (loginStatus){
+        set_login_status(false)
+        load_user()
+        check_authenticated()
+        refresh()
       }
 
     return (
@@ -19,26 +27,16 @@ const Main = ({
         <div>
         {/* <!-- Submit button --> */}
         <div className="my-5 text-center text-xl-start">
-            <h1 className="display-5 fw-bolder text-white mb-2">Bienvenidos al Cigré Grupo C2.5</h1>
+            <h1 className="display-5 fw-bolder text-white mb-2">Bienvenidos al CIGRE Grupo C2.5</h1>
             <p className="lead fw-normal text-white-50 mb-4">
                 Modelos de Inteligencia Artificial aplicados en Sistemas Eléctricos o Afines
             </p>
         </div>
         {isAuthenticated && user?
         <>
-          <Dropdown>
-            <Dropdown.Toggle variant="dark" bg="dark" id="dropdown-basic">
-                {user.get_full_name}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item name='profile'>
-                <Link to='/profile' id="RouterNavLink" className='text-decoration-none'>Profile</Link>                  
-              </Dropdown.Item>
-              <Dropdown.Item name='logout'>
-                <Link to='/' id="RouterNavLink" className='text-decoration-none' onClick={onClick}>Logout</Link>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        <p className="secondary mt-2">
+            &nbsp;{user.get_full_name} &nbsp;
+        </p>            
         <p className="secondary mt-2">
             &nbsp;Ir a &nbsp;
             <Link to="/home">
@@ -49,13 +47,21 @@ const Main = ({
         :
         <>
         <p className="secondary mt-2">
+            Ingresar como &nbsp;
+            <button onClick={(e)=>{
+                login(
+                  "***REMOVED***",
+                  "***REMOVED***"
+                )
+              }} className='btn btn-success'
+            >Invitado</button>
+        </p>
+        <p className="secondary mt-2">
           Ir a &nbsp;
           <Link to="/login" className='text-decoration-none'>
             Login
           </Link>
-        </p> 
-        <p className="secondary mt-2">
-          O puedes &nbsp;
+          &nbsp;o puedes &nbsp;
           <Link to="/signup" className='text-decoration-none'>
             Registrarte
           </Link>
@@ -71,8 +77,13 @@ const Main = ({
 const mapStateToProps = state => ({
     isAuthenticated: state.Auth.isAuthenticated,
     user: state.Auth.user,
+    loginStatus: state.Auth.loginStatus
 })
 
 export default connect(mapStateToProps,{
-    logout,
+  login,
+  load_user,
+  check_authenticated,
+  refresh,
+  set_login_status
 }) (Main)

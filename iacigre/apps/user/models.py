@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from apps.user_register.models import User_Register
+from rest_framework import serializers
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
-        
+        if not User_Register.objects.filter(email=email.lower()).exists():
+            msg = 'El Email no cuenta con permisos para registrarse en esta página, contacta a los administradores'
+            raise serializers.ValidationError(msg)
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
 
@@ -13,7 +17,6 @@ class UserAccountManager(BaseUserManager):
         user.save()
 
         return user
-
     
     def create_superuser(self, email, password, **extra_fields):
         user = self.create_user(email, password, **extra_fields)

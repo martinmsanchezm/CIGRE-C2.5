@@ -12,8 +12,12 @@ const Layout = (props) => {
         props.refresh()
         props.check_authenticated()
         props.load_user()
-        props.get_projects()
-        props.get_profile()
+        if (props.isAuthenticated && props.user && props.user.id!==8){
+            props.get_profile()
+            props.get_projects(props.user.id)
+        }else{
+            props.get_projects(null)
+        }
       }, []);
 
     return(
@@ -25,7 +29,12 @@ const Layout = (props) => {
     )
 }
 
-export default connect(null, {
+const mapStateToProps = state => ({
+    isAuthenticated: state.Auth.isAuthenticated,
+    user: state.Auth.user
+})
+
+export default connect(mapStateToProps, {
     check_authenticated,
     load_user,
     refresh,

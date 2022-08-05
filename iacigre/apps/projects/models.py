@@ -5,8 +5,8 @@ User = get_user_model()
 # Create your models here.
 
 STATUS = (
-    (0,"Borrador"),
-    (1,"finalizado")
+    (0,"-edit"),
+    (1,"+edit")
 )
 
 class Projects(models.Model):
@@ -17,6 +17,7 @@ class Projects(models.Model):
     category = models.CharField(max_length=50,blank=True,null=True)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     status = models.IntegerField(choices=STATUS, default=0)
+    status_unite = models.IntegerField(choices=STATUS, default=0)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

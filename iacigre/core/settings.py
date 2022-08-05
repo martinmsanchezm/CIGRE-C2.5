@@ -62,7 +62,9 @@ PROJECT_APP = [
     'apps.user',
     'apps.projects',
     'apps.user_profile',
-    'apps.section'
+    'apps.section',
+    'apps.unite',
+    'apps.user_register',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APP + PROJECT_APP

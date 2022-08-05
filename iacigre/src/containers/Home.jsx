@@ -11,7 +11,9 @@ import NewProjects from "../components/pages/NewProjects";
 import EditProject from "../components/pages/EditProject";
 
 const Home = ({
-    Set_view_new_project
+    Set_view_new_project,
+    isAuthenticated,
+    user
 }) => {
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const Home = ({
                 <div className="row gx-5 align-items-center justify-content-center">
                     <div className="col-lg-8 col-xl-7 col-xxl-6">
                         <div className="my-5 text-center text-xl-start">
-                            <h1 className="display-5 fw-bolder text-white mb-2">Cigré C2.5 Aplicaciones de IA en Redes Eléctricas</h1>
+                            <h1 className="display-5 fw-bolder text-white mb-2">CIGRE C2.5 Aplicaciones de IA en Redes Eléctricas</h1>
                             <p className="lead fw-normal text-white-50 mb-4">Uniendo los modelos de inteligencia artificial con los modelos eléctricos, para la toma de decisión en la operación del sistema</p>
                             {/* <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                                 <a className="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
@@ -79,14 +81,17 @@ const Home = ({
                         <div className="text-center">
                             <h2 className="fw-bolder">Nuestros Proyectos</h2>
                             <p className="lead fw-normal text-muted mb-5">
-                                En el Grupo Cigré C2.5 estamos trabajando los siguientes 
-                                modelos de IA aplicados a sistemas eléctricos. También puedes crear un
+                                En el Grupo CIGRE C2.5 estamos trabajando los siguientes 
+                                modelos de IA aplicados a sistemas eléctricos. 
+                                {user && user.id!==8? 
+                                <p>También puedes crear un
                                 <button 
                                     type="button" 
                                     onClick={onClick} 
                                     className="btn btn-sm btn-link shadow-none">                                    
                                     <p className="lead fw-normal text-muted m-0 mb-2 p-0">Nuevo Proyecto</p>
                                 </button>
+                                </p>:null}
                             </p>
                         </div>
                     </div>
@@ -97,10 +102,10 @@ const Home = ({
                 <aside className="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                     <div className="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                         <div className="mb-4 mb-xl-0">
-                            <div className="fs-3 fw-bold text-white">CIGRÉ COLOMBIA</div>
+                            <div className="fs-3 fw-bold text-white">CIGRE COLOMBIA</div>
                             <div className="text-white-50 text-justify">Tiene por objeto facilitar y promover el intercambio de 
-                                conocimientos técnicos e información entre la organización central del Consejo 
-                                Internacional de Grandes Redes Eléctricas CIGRÉ, los comités nacionales y los asociados de CIGRÉ COLOMBIA​</div>
+                                conocimientos técnicos e información entre la organización central del Consejo
+                                Internacional de Grandes Redes Eléctricas CIGRE, los comités nacionales y los asociados de CIGRE COLOMBIA​</div>
                         </div>
                     </div>
                 </aside>
@@ -112,6 +117,7 @@ const Home = ({
 
 
 const mapStateToProps = state => ({
+    user: state.Auth.user
 })
 
 export default connect(mapStateToProps,{

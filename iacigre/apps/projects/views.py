@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ProjectsSerializer
+from apps.unite.models import Unite
 from .models import Projects
 from apps.user_profile import models, serializers
 from os import path, remove
@@ -10,12 +11,19 @@ from django.core.files.storage import FileSystemStorage
 from datetime import datetime
 User = get_user_model()
 
-# Create your views here.
+# validate_activate
+def validate_activate(user_id):
+    if (user_id==8):
+        return Response(
+            {'error': 'Usuario no tiene permisos'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    return None
 
 class ListProjectsView(APIView):
     def post(self, request, format=None):
-        user_id = self.request.user.id
-        try:
+            user_req = self.request.user
+        # try:
             result = ProjectsSerializer(Projects.objects.all().order_by('-updated_at'), many=True)
             result = result.data
             for data in result:                
@@ -27,25 +35,33 @@ class ListProjectsView(APIView):
                     user_profile = None
                 data['author'] = {
                     'name':user.first_name+' '+user.last_name, 
-                    'user_profile':user_profile
+                    'user_profile':user_profile,
                 }
                 data['updated_at'] = data['updated_at'].split('T')[0]
                 data['created_at'] = data['created_at'].split('T')[0]
                 data['title'] = data['title']
-                data['status'] = 1 if user_id==user.id else 0
+                data['status'] = 1 if user_req.id==user.id else 0
+                # datos de usuario unite 
+                data['status_unite'] = 0
+                unites = Unite.objects.filter(project=data.get('id'))
+                if (unites.exists()):
+                    for unite in unites:
+                        if user_req.id==unite.user_add:
+                            data['status_unite'] = 1
             return Response(
                 {'res': result},
                 status=status.HTTP_200_OK
             )
-        except:
-            return Response(
-                {'error': 'Error al cargar los proyectos'},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        # except:
+        #     return Response(
+        #         {'error': 'Error al cargar los proyectos'},
+        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        #     )
 
 class AddNewProject(APIView):
     def post(self, request, format=None):
         user = self.request.user
+        validate_activate(user.id)
         data = self.request.data
 
         title  = data.get('title')
@@ -81,8 +97,10 @@ class AddNewProject(APIView):
 
 class EditNewProject(APIView):
     def post(self, request, format=None):
+        user = self.request.user
+        validate_activate(user.id)
         data = self.request.data
-
+        
         title  = data.get('title')
         desc = data.get('desc')
         category = data.get('category')
@@ -105,6 +123,8 @@ class EditNewProject(APIView):
 
 class DeleteProject(APIView):
     def post(self, request, format=None):
+        user = self.request.user
+        validate_activate(user.id)
         data = self.request.data
         #editar project
         try:
@@ -120,12 +140,14 @@ class DeleteProject(APIView):
             )
         except:
             return Response(
-                {'error': 'Error al crear el proyecto en la base de datos'},
+                {'error': 'Error al eliminar el proyecto'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 class ImageProject(APIView):
     def post(self, request, format=None):
+        user = self.request.user
+        validate_activate(user.id)
         file = self.request.data
         try:
             fs = FileSystemStorage(location="media/photos/project/")

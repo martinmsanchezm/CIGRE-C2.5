@@ -189,7 +189,7 @@ export const delete_edit_project = (
     }
 }
 
-export const get_projects = (user) => async dispatch => {
+export const get_projects = (user_id) => async dispatch => {
 
     dispatch({
         type: SET_AUTH_LOADING
@@ -204,7 +204,7 @@ export const get_projects = (user) => async dispatch => {
     };
 
     const body = JSON.stringify({
-        user:user
+        user_id,
     });
 
     try {
@@ -271,7 +271,7 @@ export const send_image = (image, project_id, action) => async dispatch => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-            'Authorization': `JWT ${localStorage.getItem('access')}`
+            // 'Authorization': `JWT ${localStorage.getItem('access')}`
         }
     };
 

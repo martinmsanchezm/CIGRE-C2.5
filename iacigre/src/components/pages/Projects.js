@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { edit_project, set_post_project } from '../../redux/actions/projects';
 import { get_sections } from '../../redux/actions/section';
+import { get_unite } from '../../redux/actions/unite';
 import { Link } from "react-router-dom";
 import '../../styles/card.css';
 
@@ -8,7 +9,8 @@ function Projects({
     list_projects,
     edit_project,
     set_post_project,
-    get_sections
+    get_sections,
+    get_unite
 }) {
 
     const onClick = (prj) =>{
@@ -18,11 +20,12 @@ function Projects({
     const onSelect = (prj) =>{
         set_post_project(prj)
         get_sections(prj.id)
+        get_unite(prj.id)
     }
 
 
   return (
-    <div className="row gx-5">
+    <div className="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-3 justify-content-center">
         {list_projects?
             list_projects.map((prj)=>(
             <div key={prj.id} className="col-lg-4 mb-5">
@@ -78,6 +81,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
     edit_project,
     set_post_project,
-    get_sections
+    get_sections,
+    get_unite
 })(Projects)
 

@@ -2,28 +2,34 @@ import { connect } from 'react-redux';
 import Layout from '../../hocs/Layout';
 import AddSection from './AddSection';
 import EditSection from './EditSection';
+import NewUnite from './NewUnite';
 import {
     Set_view_new_section, 
     edit_section, 
     Set_view_edit_section,
-    reset_section_status
+    // reset_section_status
 } from '../../redux/actions/section';
-import { set_post_project } from '../../redux/actions/projects';
+// import { set_post_project } from '../../redux/actions/projects';
+import { delete_unite, Set_view_unite_user, reset_unite_status } from '../../redux/actions/unite';
 import { useEffect, useState } from 'react';
 import '../../styles/line.css';
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from 'prism-react-renderer/themes/github';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faSquareCheck  } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSquareCheck, faUserPlus, faUserXmark  } from "@fortawesome/free-solid-svg-icons";
 
 function PostProject({
     post_project,
     Set_view_new_section,
-    set_post_project,
+    // set_post_project,
     list_sections,
     edit_section,
     Set_view_edit_section,
-    reset_section_status
+    // reset_section_status,
+    Set_view_unite_user,
+    delete_unite,
+    users_unite,
+    reset_unite_status
 }) {
     useEffect(() => {
         // if (JSON.parse(localStorage.getItem('post_project'))){
@@ -43,6 +49,12 @@ function PostProject({
         setEdit(!Edit)
     }
 
+    const onJoin = (e) =>{
+        e.preventDefault()
+        reset_unite_status()
+        Set_view_unite_user(true)
+    }
+
   return (
     <Layout>
         {post_project?        
@@ -52,27 +64,65 @@ function PostProject({
                     <div className="col-lg-3">
                         <div className="d-flex align-items-center mt-lg-5 mb-1">
                             <img className="img-fluid rounded-circle" 
-                                src={post_project.author.user_profile.photo? post_project.author.user_profile.photo:"https://dummyimage.com/50x50/ced4da/6c757d.jpg"} 
+                                src={post_project.author.user_profile && post_project.author.user_profile.photo? 
+                                    post_project.author.user_profile.photo
+                                    :"https://dummyimage.com/50x50/ced4da/6c757d.jpg"} 
                                 alt="..." 
                                 style={{height:"3rem",width:"3rem"}}/>
                             <div className="ms-3">
                                 <div className="fw-bold">{post_project.author.name}</div>
-                                <div className="text-muted">{post_project.author.user_profile? post_project.author.user_profile.user_company:""}</div>
-                            </div>
+                                <div className="text-muted">{post_project.author.user_profile &&
+                                                            post_project.author.user_profile.user_company? 
+                                                            post_project.author.user_profile.user_company:""}
+                                </div>
+                            </div>                            
                         </div>
+                        {users_unite.length? users_unite.map((user)=>(
+                            <div key={user.id} className="d-flex align-items-between mt-lg-5 mb-1">
+                                <img className="img-fluid rounded-circle" 
+                                    src={user.user_profile && user.user_profile.photo? 
+                                        user.user_profile.photo
+                                        :"https://dummyimage.com/50x50/ced4da/6c757d.jpg"} 
+                                    alt="..." 
+                                    style={{height:"3rem",width:"3rem"}}/>
+                                <div className="ms-3">
+                                    <div className="fw-bold">{user.name}</div>
+                                    <div className="text-muted">{user.user_profile && 
+                                                    user.user_profile.user_company? 
+                                                    user.user_profile.user_company:""}
+                                    </div>                                    
+                                </div>
+                                {(Edit && post_project.status)?
+                                    <button className="m-1 btn btn-light bg-transparent border-0" 
+                                    onClick={(e)=>{
+                                        e.preventDefault()
+                                        delete_unite(post_project.id, user.id)
+                                    }}>
+                                        <FontAwesomeIcon icon={faUserXmark}/>
+                                    </button> 
+                                    :null}                                                       
+                            </div>
+                        )):null}
+                        {(Edit && post_project.status)?
+                            <button className="m-5 btn btn-light bg-transparent border-0" 
+                                onClick={onJoin}    >
+                                <p className='m-0 p-0'><FontAwesomeIcon icon={faUserPlus}/></p>
+                            </button>                            
+                        :null
+                        }
                     </div>
                     <div className="col-lg-9">
                         <article>
                             <header className="mb-4">
                                 <h1 className="fw-bolder mb-1">{post_project.title}</h1>
-                                <div className='d-flex flex-row'>
-                                    <div className="text-muted fst-italic mt-1 p-0">{post_project.created_at}</div>
-                                    {post_project.status?
+                                <div className="d-flex justify-content-between">
+                                    <div className="text-muted fst-italic mt-1">{post_project.created_at}</div>
+                                    {(post_project.status || post_project.status_unite)?
                                         <button onClick={onStateEdit} className='btn btn-light bg-transparent border-0'>
                                             <p className='m-0 p-0'><FontAwesomeIcon icon={Edit?faSquareCheck:faPencil}/></p>
                                         </button>
                                         :null 
-                                    }                                  
+                                    }           
                                 </div>                                
                                 <a className="badge bg-secondary text-decoration-none link-light" href="#!">{post_project.category}</a>
                             </header>
@@ -110,7 +160,7 @@ function PostProject({
                                             )}
                                         </Highlight>
                                     :null}                                    
-                                    {post_project.status && Edit?
+                                    {((post_project.status || post_project.status_unite) && Edit)?
                                         <div className="divider">
                                             <span></span>
                                             <button onClick={()=>onEdit(section)} className='btn btn-sm'>
@@ -140,6 +190,7 @@ function PostProject({
             </div>
             <AddSection />
             <EditSection />
+            <NewUnite />
         </section>
         :null}
     </Layout>
@@ -147,12 +198,16 @@ function PostProject({
 }
 const mapStateToProps = state => ({
     post_project: state.Projects.post_project,
-    list_sections: state.Section.list_sections
+    list_sections: state.Section.list_sections,
+    users_unite: state.Unite.users_unite,
 })
 export default connect(mapStateToProps, {
     Set_view_new_section,
-    set_post_project,
+    // set_post_project,
     edit_section,
     Set_view_edit_section,
-    reset_section_status
+    // reset_section_status,
+    Set_view_unite_user,
+    delete_unite,
+    reset_unite_status
 })(PostProject)
