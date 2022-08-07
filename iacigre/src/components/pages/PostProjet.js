@@ -179,7 +179,7 @@ function PostProject({
                             ))}
 
                         </article>  
-                        {post_project.status && Edit? 
+                        {((post_project.status || post_project.status_unite) && Edit)? 
                             <button 
                                 type="button" 
                                 className="btn btn-primary" 
