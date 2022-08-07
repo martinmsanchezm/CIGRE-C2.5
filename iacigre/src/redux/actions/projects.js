@@ -39,7 +39,8 @@ export const add_new_project = (
     desc,
     category, 
     photo,
-    status
+    status,
+    github
     ) => async dispatch => {
 
     dispatch({
@@ -60,6 +61,7 @@ export const add_new_project = (
         category, 
         photo,
         status,
+        github
     });
 
     try {
@@ -94,6 +96,7 @@ export const add_edit_project = (
     title,
     desc,
     category, 
+    github
     ) => async dispatch => {
 
     dispatch({
@@ -113,6 +116,7 @@ export const add_edit_project = (
         title,
         desc,
         category, 
+        github
     });
 
     try {
@@ -271,7 +275,7 @@ export const send_image = (image, project_id, action) => async dispatch => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-            // 'Authorization': `JWT ${localStorage.getItem('access')}`
+            'Authorization': `JWT ${localStorage.getItem('access')}`
         }
     };
 

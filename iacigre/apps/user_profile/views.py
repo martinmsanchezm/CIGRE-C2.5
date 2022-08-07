@@ -63,13 +63,11 @@ class EditUserProfile(APIView):
                 user_profile.update(
                     user_id=user_req,
                     user_company=data['user_company'],
-                    slug='_%s'%user_req.id,
                     photo=''
                 )
             else:
                 User_Profile.objects.create(
                     user_id=user_req,
-                    slug='_%s'%user_req.id,
                     user_company=data['user_company'],
                     photo=''
                 )
@@ -100,12 +98,13 @@ class EditImageProfile(APIView):
             fs = FileSystemStorage(location="media/photos/user/")
             ext_file = file['file'].name.split('.')[-1].lower()
             user_profile = User_Profile.objects.filter(user_id=user_req.id)
-            photo_name = str(user_profile[0].photo).split('/')[-1]
+            photo_name = str(user_profile[0].photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
             name = '%s_%s.%s'%(user_req.id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
             user_profile.update(
-                photo='photos/user/%s'%(name)
+                photo='photos/user/%s'%(name),
+                photo_name=name
             )
             fs.save(name, file['file'])
             return Response(
@@ -117,7 +116,6 @@ class EditImageProfile(APIView):
                 {'error': 'Error al actualizar la imagen de perfil'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
 
 class Get_Users(APIView):
     def get(self, request, format=None):
@@ -139,7 +137,8 @@ class Get_Users(APIView):
                         'id':user.id,
                         'name': user.first_name+' '+user.last_name,
                         'company': company,
-                        'photo': photo
+                        'photo': photo,
+                        'is_head': user.is_staff
                     })
             return Response(
                 {'res': result},

@@ -23,6 +23,8 @@ function NewProjects({
     const title = useRef(null);
     const desc = useRef(null);
     const image = useRef(null);
+    const github = useRef(null);
+
     const [newCategory, setnewCategory] = useState("Eléctricos");
     
     const onSubmit = e =>{
@@ -32,7 +34,8 @@ function NewProjects({
             desc.current.value,
             newCategory,
             "",
-            0
+            0,
+            github.current.value
         )
         send_image(
             image.current.files[0],
@@ -72,9 +75,9 @@ function NewProjects({
                 <Modal.Body>
                 <form onSubmit={e=>onSubmit(e)}>
                     <h6>Upload a photo...</h6>                
-                    <div className="ml-2 mr-2 col-lg-12 mb-4">
+                    <div className="ml-2 mr-2 col-lg-12 mb-2">
                         <input ref={image} type="file" className="form-control"/>
-                    </div>
+                    </div>                    
                     <div className="form-outline mb-4">
                         <input 
                                 className="form-control" 
@@ -85,7 +88,7 @@ function NewProjects({
                             />
                         <label className="form-label" htmlFor="form3Example3">Título</label>
                     </div>
-                    <div className="form-outline mb-4">
+                    <div className="form-outline d-flex flex-row mb-4">
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 {newCategory}
@@ -100,7 +103,7 @@ function NewProjects({
                         </Dropdown>
                         <p>Categoría de los datos</p>
                     </div>                    
-                    <div className="form-outline mb-2">
+                    <div className="form-outline mb-4">
                         <textarea 
                                 className="form-control" 
                                 ref={desc}
@@ -109,6 +112,16 @@ function NewProjects({
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Descripción del proyecto</label>
+                    </div>
+                    <div className="form-outline d-flex flex-row mb-4">
+                        <label className="form-label m-1" htmlFor="form3Example3">GitHub</label>
+                        <input 
+                                className="form-control" 
+                                ref={github}
+                                type="text"
+                                maxLength={145}
+                                required
+                            />
                     </div>                    
                     <div>
                         {/* <!-- Submit button --> */}

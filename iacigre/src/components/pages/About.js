@@ -7,7 +7,8 @@ import create_grupo from '../../assets/img/create_grupo.PNG';
 
 function About({
     get_users,
-    users
+    users,
+    users_head
 }) {
     useEffect(() => {
         get_users()
@@ -78,22 +79,24 @@ function About({
             <div className="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
                 {users? 
                 users.map((user)=>(
-                    <div key={user.id} className="col mb-5 mb-5 mb-xl-0">
+                    <div key={user.id} className="col-lg-4 mb-5 mb-xl-5">
                         <div className="text-center">
                             <img className="img-fluid rounded-circle mb-4 px-4" style={{width:'15rem', height:'12rem'}} src={user.photo? user.photo:"https://dummyimage.com/150x150/ced4da/6c757d"} alt="..." />
                             <h5 className="fw-bolder">{user.name}</h5>
                             <div className="fst-italic text-muted">{user.company}</div>
+                            <p className="lead fw-normal text-muted mb-5">{user.is_head?"Coordinador":"Integrante"}</p>
                         </div>
                     </div>
                 )):<></>}
-            </div>
+            </div>            
         </div>
     </section>
     </Layout>
   )
 }
 const mapStateToProps = state => ({
-    users: state.Profile.users
+    users: state.Profile.users,
+
 })
 export default connect(mapStateToProps, {
     get_users

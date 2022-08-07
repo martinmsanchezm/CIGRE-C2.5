@@ -17,6 +17,7 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from 'prism-react-renderer/themes/github';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faSquareCheck, faUserPlus, faUserXmark  } from "@fortawesome/free-solid-svg-icons";
+import { FaGithub } from 'react-icons/fa';
 
 function PostProject({
     post_project,
@@ -115,16 +116,19 @@ function PostProject({
                         <article>
                             <header className="mb-4">
                                 <h1 className="fw-bolder mb-1">{post_project.title}</h1>
+                                <a className="badge bg-secondary text-decoration-none link-light" href="#!">{post_project.category}</a>
                                 <div className="d-flex justify-content-between">
-                                    <div className="text-muted fst-italic mt-1">{post_project.created_at}</div>
+                                    <div className="text-muted fst-italic mt-2">{post_project.created_at}</div>
                                     {(post_project.status || post_project.status_unite)?
                                         <button onClick={onStateEdit} className='btn btn-light bg-transparent border-0'>
                                             <p className='m-0 p-0'><FontAwesomeIcon icon={Edit?faSquareCheck:faPencil}/></p>
                                         </button>
                                         :null 
                                     }           
-                                </div>                                
-                                <a className="badge bg-secondary text-decoration-none link-light" href="#!">{post_project.category}</a>
+                                </div> 
+                                {post_project.github?
+                                    <a className="btn text-decoration-none" target="_blank" href={post_project.github}><FaGithub/></a>                                        
+                                :null}
                             </header>
                             <div className='mb-5'></div>
                             {/* Articulos creados del proyecto */}

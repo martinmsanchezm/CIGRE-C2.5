@@ -12,7 +12,6 @@ import EditProject from "../components/pages/EditProject";
 
 const Home = ({
     Set_view_new_project,
-    isAuthenticated,
     user
 }) => {
 

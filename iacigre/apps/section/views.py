@@ -42,6 +42,7 @@ class AddSection(APIView):
                 section = Section.objects.filter(id=section.id)
                 section.update(
                     photo='photos/section/%s'%(name),
+                    photo_name=name
                 )
                 fs.save(name, data['file'])                      
 
@@ -71,21 +72,23 @@ class EditSection(APIView):
             if (data['file']):
                 fs = FileSystemStorage(location="media/photos/section/")
                 ext_file = data['file'].name.split('.')[-1].lower()
-                photo_name = str(section[0].photo).split('/')[-1]
+                photo_name = str(section[0].photo_name)
                 if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                     remove(r'%s/%s'%(fs.location, photo_name))
                 name = '%s_%s.%s'%(section[0].id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
                 section.update(
                     photo='photos/section/%s'%(name),
+                    photo_name=name
                 )
                 fs.save(name, data['file']) 
             if data['delete_image']=='true':
                 fs = FileSystemStorage(location="media/photos/section/")
-                photo_name = str(section[0].photo).split('/')[-1]
+                photo_name = str(section[0].photo_name)
                 if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                     remove(r'%s/%s'%(fs.location, photo_name))
                 section.update(
                     photo='',
+                    photo_name=''
                 )
             return Response(
                 {'res': 'Se edita la sección de forma exitosa'},
@@ -122,7 +125,7 @@ class DeleteSection(APIView):
         try:
             section = Section.objects.get(id=data.get('id'))
             fs = FileSystemStorage(location="media/photos/section/")
-            photo_name = str(section.photo).split('/')[-1]
+            photo_name = str(section.photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
             section.delete()

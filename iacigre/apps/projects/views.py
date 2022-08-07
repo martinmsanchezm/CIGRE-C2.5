@@ -4,6 +4,7 @@ from rest_framework import status
 from .serializers import ProjectsSerializer
 from apps.unite.models import Unite
 from .models import Projects
+from apps.section.models import Section
 from apps.user_profile import models, serializers
 from os import path, remove
 from django.contrib.auth import get_user_model
@@ -22,11 +23,11 @@ def validate_activate(user_id):
 
 class ListProjectsView(APIView):
     def post(self, request, format=None):
-            user_req = self.request.user
-        # try:
-            result = ProjectsSerializer(Projects.objects.all().order_by('-updated_at'), many=True)
+        user_req = self.request.user
+        try:
+            result = ProjectsSerializer(Projects.objects.all().order_by('-created_at'), many=True)
             result = result.data
-            for data in result:                
+            for data in result:
                 user = User.objects.get(id=data.get('author'))
                 profile = models.User_Profile.objects.filter(user_id=data.get('author'))
                 if profile.exists():
@@ -40,6 +41,7 @@ class ListProjectsView(APIView):
                 data['updated_at'] = data['updated_at'].split('T')[0]
                 data['created_at'] = data['created_at'].split('T')[0]
                 data['title'] = data['title']
+                data['github'] = data['github']
                 data['status'] = 1 if user_req.id==user.id else 0
                 # datos de usuario unite 
                 data['status_unite'] = 0
@@ -52,11 +54,11 @@ class ListProjectsView(APIView):
                 {'res': result},
                 status=status.HTTP_200_OK
             )
-        # except:
-        #     return Response(
-        #         {'error': 'Error al cargar los proyectos'},
-        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        #     )
+        except:
+            return Response(
+                {'error': 'Error al cargar los proyectos'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class AddNewProject(APIView):
     def post(self, request, format=None):
@@ -69,6 +71,7 @@ class AddNewProject(APIView):
         photo = data.get('photo')
         category = data.get('category')
         status_value = data.get('status')
+        github = data.get('github')
         if (Projects.objects.filter(title=title).exists()):
             return Response(
                 {'error': 'El titulo del proyecto ya existe en la base de datos'},
@@ -78,12 +81,13 @@ class AddNewProject(APIView):
         try:
             Projects.objects.create(
                 title=title,
-                slug=title+'_',
                 desc=desc,
                 category=category,
                 photo=photo,
+                photo_name=photo,
                 author=user,
-                status=status_value
+                status=status_value,
+                github=github
             )
             return Response(
                 {'res': "Se crea el proyecto correctamente"},
@@ -104,12 +108,14 @@ class EditNewProject(APIView):
         title  = data.get('title')
         desc = data.get('desc')
         category = data.get('category')
+        github = data.get('github')
         #editar project
         try:
             project = Projects.objects.get(id=data.get('id'))
             project.title = title
             project.desc = desc
             project.category = category
+            project.github = github
             project.save()
             return Response(
                 {'res': "Se modifica el proyecto correctamente"},
@@ -126,14 +132,20 @@ class DeleteProject(APIView):
         user = self.request.user
         validate_activate(user.id)
         data = self.request.data
-        #editar project
         try:
             project = Projects.objects.get(id=data.get('id'))
             fs = FileSystemStorage(location="media/photos/project/")
-            photo_name = str(project.photo).split('/')[-1]
+            photo_name = str(project.photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
-            project.delete()
+            list_section = Section.objects.filter(project=data.get('id'))
+            if (list_section.exists()):
+                fs = FileSystemStorage(location="media/photos/section/")
+                for section in list_section:
+                    photo_name = str(section.photo_name)
+                    if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
+                        remove(r'%s/%s'%(fs.location, photo_name))  
+            project.delete()                  
             return Response(
                 {'res': "Se elimina el proyecto correctamente"},
                 status=status.HTTP_200_OK
@@ -160,12 +172,13 @@ class ImageProject(APIView):
                 project = Projects.objects.filter(title=file['project_id'])
                 name_id = project[0].id
                 res = 'Se crea el proyecto correctamente'
-            photo_name = str(project[0].photo).split('/')[-1]
+            photo_name = str(project[0].photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
             name = '%s_%s.%s'%(name_id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
             project.update(
-                photo='photos/project/%s'%(name)
+                photo='photos/project/%s'%(name),
+                photo_name=name
             )
             fs.save(name, file['file'])
             return Response(

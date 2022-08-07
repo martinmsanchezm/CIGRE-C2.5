@@ -10,10 +10,10 @@ STATUS = (
 
 class Section(models.Model):
     title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=20)
     desc = models.TextField()
     code = models.TextField()
     photo = models.ImageField(upload_to='photos/section')
+    photo_name = models.CharField(max_length=50, default='')
     status = models.IntegerField(choices=STATUS, default=0)
     author = models.IntegerField()
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
@@ -25,4 +25,4 @@ class Section(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.slug
+        return str(self.id)

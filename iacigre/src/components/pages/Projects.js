@@ -4,6 +4,8 @@ import { get_sections } from '../../redux/actions/section';
 import { get_unite } from '../../redux/actions/unite';
 import { Link } from "react-router-dom";
 import '../../styles/card.css';
+import { FaGithub } from 'react-icons/fa';
+
 
 function Projects({
     list_projects,
@@ -52,7 +54,12 @@ function Projects({
                                 <div className="small align-items-center">
                                     <div className="fw-bold">{prj.author.name}</div>
                                     <div className="text-muted">{prj.updated_at}</div>
-                                </div>                                
+                                </div>
+                                <div className="ms-xl-4">
+                                    {prj.github?
+                                        <a className="btn m-3 text-decoration-none" target="_blank" href={prj.github}><FaGithub/></a>                                        
+                                    :null}
+                                </div>                               
                                 {prj.status?
                                     <div className="ms-xl-4">
                                         <button 

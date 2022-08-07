@@ -29,9 +29,9 @@ const PageMain = (props) => {
         </div>
         <div className="social-icons">
             <div className="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
-                <a className="btn btn-dark m-3" href="http://www.cigrecolombia.org/Pages/Home.aspx"><FontAwesomeIcon icon={faGlobe}/></a>
-                <a className="btn btn-dark m-3" href="https://twitter.com/cigre_colombia"><FontAwesomeIcon icon={faTwitter} /></a>
-                <a className="btn btn-dark m-3" href="https://www.instagram.com/cigre.ngn.co/?hl=es"><FontAwesomeIcon icon={faInstagram}/></a>
+                <a className="btn btn-dark m-3" target="_blank" href="http://www.cigrecolombia.org/Pages/Home.aspx"><FontAwesomeIcon icon={faGlobe}/></a>
+                <a className="btn btn-dark m-3" target="_blank" href="https://twitter.com/cigre_colombia"><FontAwesomeIcon icon={faTwitter} /></a>
+                <a className="btn btn-dark m-3" target="_blank" href="https://www.instagram.com/cigre.ngn.co/?hl=es"><FontAwesomeIcon icon={faInstagram}/></a>
             </div>
         </div>
     </div>

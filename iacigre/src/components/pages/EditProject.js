@@ -10,7 +10,6 @@ import {Set_view_edit_project,
 import { useRef, useState} from 'react';
 import { Oval } from 'react-loader-spinner';
 
-
 function NewProjects({
     edit_show,
     Set_view_edit_project,
@@ -27,7 +26,7 @@ function NewProjects({
     const title = useRef(null);
     const desc = useRef(null);
     const image = useRef(null);
-
+    const github = useRef(null);
 
     const [newCategory, setnewCategory] = useState("Eléctricos");
     const [editCategory, seteditCategory] = useState(false);
@@ -44,13 +43,16 @@ function NewProjects({
             edit_project.id,
             title.current.value, 
             desc.current.value, 
-            category
+            category,
+            github.current.value 
         )
-        send_image(
-            image.current.files[0],
-            edit_project.id,
-            "edit"
-        )
+        if (image.current.files.length){
+            send_image(
+                image.current.files[0],
+                edit_project.id,
+                "edit"
+            )
+        }
     }
 
     const onSelect = e =>{
@@ -94,9 +96,9 @@ function NewProjects({
                 <Modal.Body>
                 <form> 
                     <h6>Upload a photo...</h6>                
-                    <div className="ml-2 mr-2 col-lg-12 mb-4">
+                    <div className="ml-2 mr-2 col-lg-12 mb-2">
                         <input ref={image} type="file" className="form-control"/>
-                    </div>                   
+                    </div>                                   
                     <div className="form-outline mb-4">
                         <input 
                                 className="form-control" 
@@ -109,7 +111,8 @@ function NewProjects({
                             />
                         <label className="form-label" htmlFor="form3Example3">Título</label>
                     </div>
-                    <div className="form-outline mb-4">
+                    <div className="form-outline d-flex flex-row mb-4">
+                        <p className='m-1'>Categoría de los datos</p>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 {editCategory?
@@ -123,9 +126,9 @@ function NewProjects({
                                 <Dropdown.Item name="Otros">Otros</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <p>Categoría de los datos</p>
+
                     </div>                    
-                    <div className="form-outline mb-2">
+                    <div className="form-outline mb-4">
                         <textarea 
                                 className="form-control" 
                                 name="desc"
@@ -136,6 +139,18 @@ function NewProjects({
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Descripción del proyecto</label>
+                    </div>
+                    <div className="form-outline d-flex flex-row mb-4">
+                        <label className="form-label m-2" htmlFor="form3Example3">GitHub</label>
+                        <input 
+                                className="form-control" 
+                                name="github"
+                                ref={github}
+                                defaultValue={edit_project.github}
+                                type="text"
+                                maxLength={145}
+                                required
+                            />
                     </div>                    
                     <div className="d-flex flex-row-reverse">                        
                         {loading?

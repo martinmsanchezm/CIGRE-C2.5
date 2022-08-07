@@ -10,6 +10,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
             'desc',
             'photo',
             'category',
+            'github',
             'author',
             'status',
             'created_at',

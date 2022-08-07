@@ -15,7 +15,7 @@ const initialState = {
     profile: {user_company:null, photo:null},
     profileStatus: false,
     imageStatus: false,
-    users: null
+    users: null,
 };
 
 export default function Profile(state = initialState, action) {
@@ -57,12 +57,12 @@ export default function Profile(state = initialState, action) {
         case GET_USERS_SUCCESS:
             return{
                 ...state,
-                users:payload
+                users:payload,
             }
         case GET_USERS_FAIL:
             return{
                 ...state,
-                users:null
+                users:null,
             }
         default:
             return state
