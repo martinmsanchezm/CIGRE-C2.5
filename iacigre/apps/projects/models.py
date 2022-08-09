@@ -12,7 +12,7 @@ STATUS = (
 class Projects(models.Model):
     title = models.CharField(max_length=300, unique=True)
     desc = models.CharField(max_length=500)
-    photo = models.ImageField(upload_to='photos/project')
+    photo = models.ImageField(upload_to='media/photos/project', default='')
     photo_name = models.CharField(max_length=50, default='')
     github = models.CharField(max_length=150, default='')
     category = models.CharField(max_length=50,blank=True,null=True)

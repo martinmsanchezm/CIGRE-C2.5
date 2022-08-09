@@ -12,7 +12,7 @@ class Section(models.Model):
     title = models.CharField(max_length=255)
     desc = models.TextField()
     code = models.TextField()
-    photo = models.ImageField(upload_to='photos/section')
+    photo = models.ImageField(upload_to='photos/section', default='')
     photo_name = models.CharField(max_length=50, default='')
     status = models.IntegerField(choices=STATUS, default=0)
     author = models.IntegerField()

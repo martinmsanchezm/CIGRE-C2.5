@@ -26,7 +26,7 @@ class ListUsers(APIView):
         try:
             search_results = User.objects.filter(Q(first_name__icontains=data['name']) | 
                                                 Q(last_name__icontains=data['name'])
-                                                ).exclude(is_superuser=1).exclude(id=user_id)
+                                                ).exclude(is_superuser=1).exclude(id=user_id).exclude(is_active=0)
             result = UserCreateSerializer(search_results, many=True)
             list_unite = [unite.user_add for unite in Unite.objects.filter(project=data['prj_id'])]+[8,6]
             list_result = []

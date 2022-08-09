@@ -41,7 +41,7 @@ class AddSection(APIView):
                 name = '%s_%s.%s'%(section.id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
                 section = Section.objects.filter(id=section.id)
                 section.update(
-                    photo='photos/section/%s'%(name),
+                    photo='photos/section/%s'%name,
                     photo_name=name
                 )
                 fs.save(name, data['file'])                      
@@ -77,7 +77,7 @@ class EditSection(APIView):
                     remove(r'%s/%s'%(fs.location, photo_name))
                 name = '%s_%s.%s'%(section[0].id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
                 section.update(
-                    photo='photos/section/%s'%(name),
+                    photo='photos/section/%s'%name,
                     photo_name=name
                 )
                 fs.save(name, data['file']) 

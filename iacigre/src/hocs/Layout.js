@@ -1,4 +1,4 @@
-import Navbar from '../components/navigation/Navbar';
+import Navbar from '../components/navigation/NavbarComp';
 import Footer from '../components/navigation/Footer';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';

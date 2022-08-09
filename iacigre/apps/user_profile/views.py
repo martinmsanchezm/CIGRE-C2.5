@@ -103,7 +103,7 @@ class EditImageProfile(APIView):
                 remove(r'%s/%s'%(fs.location, photo_name))
             name = '%s_%s.%s'%(user_req.id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
             user_profile.update(
-                photo='photos/user/%s'%(name),
+                photo='photos/user/%s'%name,
                 photo_name=name
             )
             fs.save(name, file['file'])
@@ -123,7 +123,7 @@ class Get_Users(APIView):
         result = []
         try:
             for user in users:
-                if not user.id in [8,6]:
+                if ((not user.id in [8,6]) and user.is_active):
                     user_profile = User_Profile.objects.filter(user_id=user.id)
                     if (user_profile.exists()):
                         user_profile = User_ProfileSerializer(user_profile, many=True)

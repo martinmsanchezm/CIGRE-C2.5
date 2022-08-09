@@ -10,6 +10,7 @@ from os import path, remove
 from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
+from django.conf import settings
 User = get_user_model()
 
 # validate_activate
@@ -83,7 +84,6 @@ class AddNewProject(APIView):
                 title=title,
                 desc=desc,
                 category=category,
-                photo=photo,
                 photo_name=photo,
                 author=user,
                 status=status_value,
@@ -158,10 +158,10 @@ class DeleteProject(APIView):
 
 class ImageProject(APIView):
     def post(self, request, format=None):
-        user = self.request.user
-        validate_activate(user.id)
-        file = self.request.data
-        try:
+            user = self.request.user
+            validate_activate(user.id)
+            file = self.request.data
+        # try:
             fs = FileSystemStorage(location="media/photos/project/")
             ext_file = file['file'].name.split('.')[-1].lower()
             if (file['action']=='edit'):
@@ -177,7 +177,7 @@ class ImageProject(APIView):
                 remove(r'%s/%s'%(fs.location, photo_name))
             name = '%s_%s.%s'%(name_id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
             project.update(
-                photo='photos/project/%s'%(name),
+                photo='photos/project/%s'%name,
                 photo_name=name
             )
             fs.save(name, file['file'])
@@ -185,8 +185,8 @@ class ImageProject(APIView):
                 {'res': res},
                 status=status.HTTP_200_OK
             )
-        except:
-            return Response(
-                {'error': 'Error al actualizar la imagen de perfil'},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        # except:
+        #     return Response(
+        #         {'error': 'Error al actualizar la imagen de perfil'},
+        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        #     )
