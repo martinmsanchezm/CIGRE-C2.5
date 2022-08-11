@@ -14,6 +14,7 @@ import Activate from './containers/auth/Activate';
 import ResetPassword from './containers/auth/ResetPassword';
 import ResetPasswordConfirm from './containers/auth/ResetPasswordConfirm';
 import PostProjet from './components/pages/PostProjet';
+
 function App() {
   return (
     <Provider store={store}>

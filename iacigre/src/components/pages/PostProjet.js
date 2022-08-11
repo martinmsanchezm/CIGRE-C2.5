@@ -65,15 +65,15 @@ function PostProject({
                     <div className="col-lg-3">
                         <div className="d-flex align-items-center mt-lg-5 mb-1">
                             <img className="img-fluid rounded-circle" 
-                                src={post_project.author.user_profile && post_project.author.user_profile.photo? 
+                                src={(post_project.author.user_profile && post_project.author.user_profile.photo)? 
                                     post_project.author.user_profile.photo
                                     :"https://dummyimage.com/50x50/ced4da/6c757d.jpg"} 
                                 alt="..." 
                                 style={{height:"3rem",width:"3rem"}}/>
                             <div className="ms-3">
                                 <div className="fw-bold">{post_project.author.name}</div>
-                                <div className="text-muted">{post_project.author.user_profile &&
-                                                            post_project.author.user_profile.user_company? 
+                                <div className="text-muted">{(post_project.author.user_profile &&
+                                                            post_project.author.user_profile.user_company)? 
                                                             post_project.author.user_profile.user_company:""}
                                 </div>
                             </div>                            
@@ -81,15 +81,15 @@ function PostProject({
                         {users_unite.length? users_unite.map((user)=>(
                             <div key={user.id} className="d-flex align-items-between mt-lg-5 mb-1">
                                 <img className="img-fluid rounded-circle" 
-                                    src={user.user_profile && user.user_profile.photo? 
+                                    src={(user.user_profile && user.user_profile.photo)? 
                                         user.user_profile.photo
                                         :"https://dummyimage.com/50x50/ced4da/6c757d.jpg"} 
                                     alt="..." 
                                     style={{height:"3rem",width:"3rem"}}/>
                                 <div className="ms-3">
                                     <div className="fw-bold">{user.name}</div>
-                                    <div className="text-muted">{user.user_profile && 
-                                                    user.user_profile.user_company? 
+                                    <div className="text-muted">{(user.user_profile && 
+                                                    user.user_profile.user_company)? 
                                                     user.user_profile.user_company:""}
                                     </div>                                    
                                 </div>
@@ -127,7 +127,7 @@ function PostProject({
                                     }           
                                 </div> 
                                 {post_project.github?
-                                    <a className="btn text-decoration-none" target="_blank" href={post_project.github}><FaGithub/></a>                                        
+                                    <a className="btn text-decoration-none" target="_blank" rel="noreferrer" href={post_project.github}><FaGithub/></a>                                        
                                 :null}
                             </header>
                             <div className='mb-5'></div>

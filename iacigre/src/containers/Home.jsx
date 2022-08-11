@@ -81,8 +81,8 @@ const Home = ({
                             <h2 className="fw-bolder">Nuestros Proyectos</h2>
                             <p className="lead fw-normal text-muted mb-5">
                                 En el Grupo CIGRE C2.5 estamos trabajando los siguientes 
-                                modelos de IA aplicados a sistemas eléctricos. 
-                                {user && user.id!==8? 
+                                modelos de IA aplicados a sistemas eléctricos o afínes. 
+                                {user && user.id!==parseInt(`${process.env.REACT_APP_INVITADO_ID}`)? 
                                 <p>También puedes crear un
                                 <button 
                                     type="button" 

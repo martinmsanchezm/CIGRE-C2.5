@@ -106,7 +106,7 @@ function NewProjects({
                                 ref={title}
                                 defaultValue={edit_project.title}
                                 type="text"
-                                maxLength={80}
+                                maxLength={120}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Título</label>
@@ -135,7 +135,7 @@ function NewProjects({
                                 ref={desc}
                                 defaultValue={edit_project.desc}
                                 type="text-area"
-                                maxLength={180}
+                                maxLength={250}
                                 required
                             />
                         <label className="form-label" htmlFor="form3Example3">Descripción del proyecto</label>

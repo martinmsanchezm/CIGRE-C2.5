@@ -29,3 +29,9 @@ yarn-error.log*
 
 # statics files
 /statics
+
+/logs
+
+/db.sqlite3
+
+/core/.env

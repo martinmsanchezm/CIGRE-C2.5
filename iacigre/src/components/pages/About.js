@@ -8,7 +8,6 @@ import create_grupo from '../../assets/img/create_grupo.PNG';
 function About({
     get_users,
     users,
-    users_head
 }) {
     useEffect(() => {
         get_users()
@@ -20,17 +19,18 @@ function About({
             <div className="col-lg-8 col-xxl-12">
                 <div className="text-center my-5">
                     <h1 className="display-5 fw-bolder mb-3">Creación de aplicaciones de 
-                        inteligencia artificial en sistemas eléctricos y sistemas afines
+                        inteligencia artificial en sistemas eléctricos y sistemas afínes
                     </h1>
                     <hr className="my-2" />  
                     <p className="lead fw-normal text-muted mb-4">
                     La inteligencia artificial ha tenido un impacto considerable en nuestra vida cotidiana, 
-                    desde las fotos que toma nuestro celular hasta los vehículos que nos transportan, 
+                    desde las fotos que toma nuestro celular hasta los vehículos que nos transportan 
                     presentan mejoras considerables con la integración de los modelos actuales de inteligencia 
                     artificial. En los sistemas eléctricos la integración de modelos de inteligencia artificial 
-                    que permitan tomar decisiones para la operación no ha tenido la repercusión que se esperaría. 
-                    Por esto, este equipo se ha creado en busca de integrar modelos de inteligencia artificial 
-                    que se apliquen en los sistemas eléctricos. 
+                    que permitan tomar decisiones para la operación no ha tenido la repercusión que se esperaría, 
+                    por esto, este equipo se ha creado en busca de integrar modelos de inteligencia artificial 
+                    que se apliquen en los sistemas eléctricos y que puedan servir como una base para la toma 
+                    decisiones en la operación del sistema. 
                     </p>
                 </div>
             </div>
@@ -46,7 +46,7 @@ function About({
                         El grupo CIGRE C2.5 inicio desde XM en busca de abordar las problemáticas 
                         que tenemos en el Sistema Eléctrico Colombiano mediante modelos de Inteligencia 
                         Artificial. Para esto se realizo una invitación a todas las personas que participan 
-                        en el sector eléctrico o afines para que puedan aportar de forma activa en 
+                        en el sector eléctrico y afines para que puedan aportar de forma activa en 
                         la realización de nuestros objetivos. 
                     </p>
                 </div>
@@ -79,12 +79,13 @@ function About({
             <div className="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
                 {users? 
                 users.map((user)=>(
-                    <div key={user.id} className="col-lg-4 mb-5 mb-xl-5">
-                        <div className="text-center">
-                            <img className="img-fluid rounded-circle mb-4 px-4" style={{width:'15rem', height:'12rem'}} src={user.photo? user.photo:"https://dummyimage.com/150x150/ced4da/6c757d"} alt="..." />
-                            <h5 className="fw-bolder">{user.name}</h5>
-                            <div className="fst-italic text-muted">{user.company}</div>
-                            <p className="lead fw-normal text-muted mb-5">{user.is_head?"Coordinador":"Integrante"}</p>
+                    <div key={user.id} className="col-lg-4 mb-4 mb-xl-5">
+                        <div className="text-center m-0">
+                            <img className="img-fluid rounded-circle mb-1 px-4" style={{width:'15rem', height:'12rem'}} src={user.photo? user.photo:"https://dummyimage.com/150x150/ced4da/6c757d"} alt="..." />
+                            <h5 className="fw-bolder m-0">{user.name}</h5>
+                            <div className="fst-italic text-muted m-0">{user.company}</div>
+                            <p className="lead fw-normal text-muted m-0">{user.is_head?"Coordinador":"Integrante"}</p>
+                            {(user.is_head && parseInt(process.env.REACT_APP_SHOW_EMAIL_ADMIN))?<p className="lead fw-normal text-muted mb-0">{user.email}</p>:null}
                         </div>
                     </div>
                 )):<></>}

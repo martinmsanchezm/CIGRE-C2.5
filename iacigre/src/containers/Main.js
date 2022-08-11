@@ -29,7 +29,7 @@ const Main = ({
         <div className="my-5 text-center text-xl-start">
             <h1 className="display-5 fw-bolder text-white mb-2">Bienvenidos al CIGRE Grupo C2.5</h1>
             <p className="lead fw-normal text-white-50 mb-4">
-                Modelos de Inteligencia Artificial aplicados en Sistemas Eléctricos o Afines
+                Modelos de Inteligencia Artificial aplicados en Sistemas Eléctricos y Afines
             </p>
         </div>
         {isAuthenticated && user?
@@ -50,8 +50,8 @@ const Main = ({
             Ingresar como &nbsp;
             <button onClick={(e)=>{
                 login(
-                  "***REMOVED***",
-                  "***REMOVED***"
+                  `${process.env.REACT_APP_INVITADO_EMAIL}`,
+                `${process.env.REACT_APP_INVITADO_PASSWORD}`
                 )
               }} className='btn btn-success'
             >Invitado</button>

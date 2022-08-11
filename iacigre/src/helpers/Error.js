@@ -5,7 +5,7 @@ export class Error extends Component {
   render() {
     return (
         <Layout>
-        Error404
+          Error404
         </Layout>
     )
   }

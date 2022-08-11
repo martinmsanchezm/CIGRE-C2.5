@@ -30,19 +30,19 @@ function Projects({
     <div className="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-3 justify-content-center">
         {list_projects?
             list_projects.map((prj)=>(
-            <div key={prj.id} className="col-lg-4 mb-5">
+            <div key={prj.id} className="col-lg-5 mb-5">
                 <div id="card" className="card h-100 shadow border-0" onClick={()=>onSelect(prj)}>
                     <Link to='/post' className='text-decoration-none'>
-                    <img className="card-img-top" 
-                            src={prj.photo? prj.photo:"https://dummyimage.com/600x350/ced4da/6c757d"} 
-                            alt="..." 
-                            style={{height:'15rem'}}/>
-                    <div className="card-body p-4">
-                        <div className="badge bg-primary bg-gradient rounded-pill mb-2">{prj.category}</div>
-                        <h5 className="card-title mb-3 text-dark">{prj.title}</h5>
-                        <p className="card-text mb-0 text-dark">{prj.desc}</p>
-                    </div>
-                    </Link>
+                        <img className="card-img-top" 
+                                src={prj.photo? prj.photo:"https://dummyimage.com/600x350/ced4da/6c757d"} 
+                                alt="..." 
+                                style={{height:'15rem'}}/>
+                        <div className="card-body p-4">
+                            <div className="badge bg-primary bg-gradient rounded-pill mb-2">{prj.category}</div>
+                            <h5 className="card-title mb-3 text-dark">{prj.title}</h5>
+                            <p className="card-text mb-0 text-dark">{prj.desc}</p>
+                        </div>
+                    </Link>                   
                     <div className="card-footer p-4 pt-0 bg-transparent border-top-0">
                         <div className='p-3'></div>
                         <div id="card-footer" className="d-flex align-items-end justify-content-between">

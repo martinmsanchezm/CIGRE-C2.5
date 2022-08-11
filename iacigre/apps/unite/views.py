@@ -1,3 +1,4 @@
+from django.conf import settings
 from apps.user.serializers import UserCreateSerializer
 from apps.user_profile import models, serializers
 from apps.unite.models import Unite
@@ -12,7 +13,7 @@ User = get_user_model()
 
 # validate_activate
 def validate_activate(user_id):
-    if (user_id==8):
+    if (user_id==int(settings.ENV_INVITADO_ID)):
         return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -28,7 +29,8 @@ class ListUsers(APIView):
                                                 Q(last_name__icontains=data['name'])
                                                 ).exclude(is_superuser=1).exclude(id=user_id).exclude(is_active=0)
             result = UserCreateSerializer(search_results, many=True)
-            list_unite = [unite.user_add for unite in Unite.objects.filter(project=data['prj_id'])]+[8,6]
+            list_unite = [unite.user_add for unite in Unite.objects.filter(project=data['prj_id'])]+\
+                        [int(settings.ENV_INVITADO_ID),int(settings.ENV_ROOT_ID)]
             list_result = []
             for data in result.data:
                 if not(data['id'] in list_unite):

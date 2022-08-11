@@ -7,12 +7,13 @@ from .models import User_Profile
 from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
+from django.conf import settings
 User = get_user_model()
 
 
 # validate_activate
 def validate_activate(user_id):
-    if (user_id==8):
+    if (user_id==int(settings.ENV_INVITADO_ID)):
         return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -22,7 +23,7 @@ def validate_activate(user_id):
 class GetUserProfile(APIView):
     def post(self, request, format=None):
         user_id = self.request.user.id
-        if (user_id==8):
+        if (user_id==int(settings.ENV_INVITADO_ID)):
             return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -48,7 +49,7 @@ class GetUserProfile(APIView):
 class EditUserProfile(APIView):
     def post(self, request, format=None):
         user_req = self.request.user
-        if (user_req.id==8):
+        if (user_req.id==int(settings.ENV_INVITADO_ID)):
             return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -88,14 +89,14 @@ class EditUserProfile(APIView):
 class EditImageProfile(APIView):
     def post(self, request, format=None):
         user_req = self.request.user
-        if (user_req.id==8):
+        if (user_req.id==int(settings.ENV_INVITADO_ID)):
             return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
         file = self.request.data
         try:
-            fs = FileSystemStorage(location="media/photos/user/")
+            fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/user/")
             ext_file = file['file'].name.split('.')[-1].lower()
             user_profile = User_Profile.objects.filter(user_id=user_req.id)
             photo_name = str(user_profile[0].photo_name)
@@ -123,7 +124,7 @@ class Get_Users(APIView):
         result = []
         try:
             for user in users:
-                if ((not user.id in [8,6]) and user.is_active):
+                if ((not user.id in [int(settings.ENV_INVITADO_ID),int(settings.ENV_ROOT_ID)]) and user.is_active):
                     user_profile = User_Profile.objects.filter(user_id=user.id)
                     if (user_profile.exists()):
                         user_profile = User_ProfileSerializer(user_profile, many=True)
@@ -138,7 +139,8 @@ class Get_Users(APIView):
                         'name': user.first_name+' '+user.last_name,
                         'company': company,
                         'photo': photo,
-                        'is_head': user.is_staff
+                        'is_head': user.is_staff,
+                        'email':user.email
                     })
             return Response(
                 {'res': result},

@@ -15,7 +15,7 @@ User = get_user_model()
 
 # validate_activate
 def validate_activate(user_id):
-    if (user_id==8):
+    if (user_id==int(settings.ENV_INVITADO_ID)):
         return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -134,13 +134,13 @@ class DeleteProject(APIView):
         data = self.request.data
         try:
             project = Projects.objects.get(id=data.get('id'))
-            fs = FileSystemStorage(location="media/photos/project/")
+            fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/project/")
             photo_name = str(project.photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
             list_section = Section.objects.filter(project=data.get('id'))
             if (list_section.exists()):
-                fs = FileSystemStorage(location="media/photos/section/")
+                fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/section/")
                 for section in list_section:
                     photo_name = str(section.photo_name)
                     if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
@@ -158,11 +158,11 @@ class DeleteProject(APIView):
 
 class ImageProject(APIView):
     def post(self, request, format=None):
-            user = self.request.user
-            validate_activate(user.id)
-            file = self.request.data
-        # try:
-            fs = FileSystemStorage(location="media/photos/project/")
+        user = self.request.user
+        validate_activate(user.id)
+        file = self.request.data
+        try:
+            fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/project/")
             ext_file = file['file'].name.split('.')[-1].lower()
             if (file['action']=='edit'):
                 project = Projects.objects.filter(id=file['project_id'])
@@ -185,8 +185,8 @@ class ImageProject(APIView):
                 {'res': res},
                 status=status.HTTP_200_OK
             )
-        # except:
-        #     return Response(
-        #         {'error': 'Error al actualizar la imagen de perfil'},
-        #         status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        #     )
+        except:
+            return Response(
+                {'error': 'Error al actualizar la imagen de perfil'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

@@ -31,9 +31,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# variables de control
+ENV_MEDIA_PATH = env('ENV_MEDIA_PATH')
+ENV_ROOT_ID = env('ENV_ROOT_ID')
+ENV_INVITADO_ID = env('ENV_INVITADO_ID')
 
 
 # Application definition
@@ -109,39 +114,47 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DEFAULT_BD=int(env('DEFAULT_BD'))
+if DEFAULT_BD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env('ENV_DB_NAME'),
+            'USER': env('ENV_DB_USER'),
+            'PASSWORD': env('ENV_DB_PASSWORD'),
+            'HOST': env('ENV_DB_HOST'),
+            'PORT': env('ENV_DB_PORT'),
+        }
+    }
 
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3001',
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:3001',
-    'http://127.0.0.1:3000',
+    env('ENV_URL_PORT_1'),
+    env('ENV_URL_PORT_2')
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3001',
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:3001',
-    'http://127.0.0.1:3000',
+    env('ENV_URL_PORT_1'),
+    env('ENV_URL_PORT_2')
 ]
 
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://127.0.0.1:3000',
+    env('ENV_URL_PORT_1'),
+    env('ENV_URL_PORT_2')
 ]
 
 

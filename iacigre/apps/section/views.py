@@ -4,17 +4,17 @@ from rest_framework import status
 from .serializers import SectionSerializer
 from .models import Section
 from apps.projects.models import Projects
-from apps.user_profile import models, serializers
 from os import path, remove
 from django.contrib.auth import get_user_model
 from django.core.files.storage import FileSystemStorage
 from datetime import datetime
+from django.conf import settings
 User = get_user_model()
 
 
 # validate_activate
 def validate_activate(user_id):
-    if (user_id==8):
+    if (user_id==int(settings.ENV_INVITADO_ID)):
         return Response(
             {'error': 'Usuario no tiene permisos'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -36,7 +36,7 @@ class AddSection(APIView):
                 project = project
             )
             if (data['file']):
-                fs = FileSystemStorage(location="media/photos/section/")
+                fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/section/")
                 ext_file = data['file'].name.split('.')[-1].lower()
                 name = '%s_%s.%s'%(section.id, str(datetime.now()).replace(':','_').replace(' ','_'), ext_file)
                 section = Section.objects.filter(id=section.id)
@@ -70,7 +70,7 @@ class EditSection(APIView):
                 code =  data['code_value'],
             )
             if (data['file']):
-                fs = FileSystemStorage(location="media/photos/section/")
+                fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/section/")
                 ext_file = data['file'].name.split('.')[-1].lower()
                 photo_name = str(section[0].photo_name)
                 if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
@@ -82,7 +82,7 @@ class EditSection(APIView):
                 )
                 fs.save(name, data['file']) 
             if data['delete_image']=='true':
-                fs = FileSystemStorage(location="media/photos/section/")
+                fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/section/")
                 photo_name = str(section[0].photo_name)
                 if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                     remove(r'%s/%s'%(fs.location, photo_name))
@@ -124,7 +124,7 @@ class DeleteSection(APIView):
         #editar project
         try:
             section = Section.objects.get(id=data.get('id'))
-            fs = FileSystemStorage(location="media/photos/section/")
+            fs = FileSystemStorage(location=settings.ENV_MEDIA_PATH+"photos/section/")
             photo_name = str(section.photo_name)
             if (photo_name and path.exists(r'%s/%s'%(fs.location, photo_name))):
                 remove(r'%s/%s'%(fs.location, photo_name))
