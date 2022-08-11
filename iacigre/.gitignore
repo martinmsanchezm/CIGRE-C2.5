@@ -28,10 +28,13 @@ yarn-error.log*
 /media
 
 # statics files
-/statics
-
-/logs
-
+statics/
+static/
+html/
+logs/
+venv/
 /db.sqlite3
-
+__pycache__/
 /core/.env
+*py[cod]
+migrations/
