@@ -12,7 +12,7 @@ const Layout = (props) => {
         props.refresh()
         props.check_authenticated()
         props.load_user()
-        if (props.isAuthenticated && props.user && props.user.id!==8){
+        if (props.isAuthenticated && props.user && props.user.id!==parseInt(`${process.env.REACT_APP_INVITADO_ID}`)){
             props.get_profile()
             props.get_projects(props.user.id)
         }else{
