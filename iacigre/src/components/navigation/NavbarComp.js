@@ -37,7 +37,7 @@ function NavBarComp({
                     {user.get_full_name}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {user && user.id!==8?
+                  {user && user.id!==parseInt(`${process.env.REACT_APP_INVITADO_ID}`)?
                     <Dropdown.Item name='profile'>                            
                       <Link to='/profile' className='text-decoration-none'>Profile</Link>
                     </Dropdown.Item>
