@@ -27,6 +27,7 @@ class AddSection(APIView):
         validate_activate(user.id)
         data = self.request.data
         try:
+            print(data['desc_value'])
             project = Projects.objects.get(id=data['post_prj_id'])
             section = Section.objects.create(
                 title = data['title_value'],

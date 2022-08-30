@@ -18,6 +18,7 @@ import theme from 'prism-react-renderer/themes/github';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faSquareCheck, faUserPlus, faUserXmark  } from "@fortawesome/free-solid-svg-icons";
 import { FaGithub } from 'react-icons/fa';
+import MDEditor from '@uiw/react-md-editor';
 
 function PostProject({
     post_project,
@@ -147,7 +148,8 @@ function PostProject({
                                         </figure>
                                     :null}
                                     {section.desc?
-                                        <p className="fs-5 mb-3">{section.desc}</p>
+                                        //<p className="fs-5 mb-3">{section.desc}</p>
+                                        <MDEditor.Markdown source={section.desc} escapeHtml={true} skipHtml={true} transformLinkUri={null} />
                                     :null}
                                     {section.code?
                                         <Highlight {...defaultProps}  code={`${section.code}`} language="python" theme={theme}>

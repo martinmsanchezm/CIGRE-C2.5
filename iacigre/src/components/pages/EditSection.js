@@ -6,10 +6,11 @@ import {
     setEditSection,
     delete_edit_section
 } from '../../redux/actions/section';
-import { useRef, useState} from 'react';
+import { useRef, useState, useEffect} from 'react';
 import { Oval } from 'react-loader-spinner';
 import { setAlert } from '../../redux/actions/alert';
 import {Modal, OverlayTrigger, Popover} from 'react-bootstrap';
+import MDEditor from '@uiw/react-md-editor';
 
 function EditSection({
     loading,
@@ -25,12 +26,18 @@ function EditSection({
     delete_edit_section
 }) {
 
+    useEffect(() => {
+        console.log('HOLAAAA')
+      }, []);
+
     const title = useRef(null);
     const desc = useRef(null);
     const image = useRef(null);
     const code = useRef(null);
     const delete_image = useRef(null);
+    const md = useRef(null);
 
+    const [mdvalue, mdsetValue] = useState(edit_section?edit_section.desc:'');
     const [selectImage, setselectImage] = useState(false);
 
     const onSubmit = e =>{
@@ -123,12 +130,13 @@ function EditSection({
                         <label className="form-label" htmlFor="form3Example3">Título de la Sección</label>
                     </div>                 
                     <div className="form-outline mb-2">
-                        <textarea 
-                                className="form-control" 
-                                ref={desc}
-                                defaultValue={edit_section?edit_section.desc:''}
-                                type="text-area"
-                            />
+                        <MDEditor
+                            value={mdvalue}
+                            autoFocus={false}
+                            ref={md}
+                            onChange={mdsetValue}
+                            previewOptions={{ skipHtml: true, escapeHtml: true, transformLinkUri: null, linkTarget: '_blank' }}
+                        />
                         <label className="form-label" htmlFor="form3Example3">Descripción de la Sección</label>
                     </div>
                     <div className="form-outline mb-2">
