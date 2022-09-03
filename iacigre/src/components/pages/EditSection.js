@@ -118,7 +118,6 @@ function EditSection({
                             onChange={mdsetValue}
                             previewOptions={{ skipHtml: true, escapeHtml: true, transformLinkUri: null, linkTarget: '_blank' }}
                         />
-                        <label className="form-label" htmlFor="form3Example3">Descripción de la Sección</label>
                     </div>                     
                     <div className='d-flex flex-row-reverse'>
                         {/* <!-- Submit button --> */}
