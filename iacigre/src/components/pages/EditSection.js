@@ -6,7 +6,7 @@ import {
     setEditSection,
     delete_edit_section
 } from '../../redux/actions/section';
-import { useRef, useState, useEffect} from 'react';
+import { useRef, useState} from 'react';
 import { Oval } from 'react-loader-spinner';
 import { setAlert } from '../../redux/actions/alert';
 import {Modal, OverlayTrigger, Popover} from 'react-bootstrap';
@@ -26,15 +26,11 @@ function EditSection({
     delete_edit_section
 }) {
 
-    const title = useRef(null);
-    const desc = useRef(null);
     const image = useRef(null);
-    const code = useRef(null);
     const delete_image = useRef(null);
     const md = useRef(null);
 
     const [mdvalue, mdsetValue] = useState('');
-    // useEffect(() => { mdsetValue(edit_section)}, [edit_section] )
     const [selectImage, setselectImage] = useState(false);
 
     const onSubmit = e =>{
@@ -48,16 +44,14 @@ function EditSection({
             checked_value = 'false';
         }
         if (image_value || 
-            title.current.value ||
-            md.current.markdown || 
-            code.current.value)
+            md.current.markdown)
             {
                 setEditSection(
                     image_value,
                     section_id,
-                    title.current.value,
+                    "",
                     md.current.markdown,
-                    code.current.value,
+                    "",
                     checked_value                     
                 )
         }else{
@@ -115,17 +109,7 @@ function EditSection({
                             Eliminar Imagen Existente
                         </label>
                     </div>
-                    :<div className='mb-4'></div>}   
-                    <div className="form-outline mb-2">
-                            <input 
-                                className="form-control" 
-                                ref={title}
-                                type="text"
-                                defaultValue={edit_section?edit_section.title:''}
-                                maxLength={200}
-                            />
-                        <label className="form-label" htmlFor="form3Example3">Título de la Sección</label>
-                    </div>                 
+                    :<div className='mb-4'></div>}                  
                     <div className="form-outline mb-2" data-color-mode="light">
                         <MDEditor
                             value={mdvalue?mdvalue:edit_section?edit_section.desc:''}
@@ -135,15 +119,6 @@ function EditSection({
                             previewOptions={{ skipHtml: true, escapeHtml: true, transformLinkUri: null, linkTarget: '_blank' }}
                         />
                         <label className="form-label" htmlFor="form3Example3">Descripción de la Sección</label>
-                    </div>
-                    <div className="form-outline mb-2">
-                        <textarea 
-                                className="form-control" 
-                                ref={code}
-                                defaultValue={edit_section?edit_section.code:''}
-                                type="text-area"
-                            />
-                        <label className="form-label" htmlFor="form3Example3">Código de la Sección</label>
                     </div>                     
                     <div className='d-flex flex-row-reverse'>
                         {/* <!-- Submit button --> */}
