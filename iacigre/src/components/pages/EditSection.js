@@ -26,10 +26,6 @@ function EditSection({
     delete_edit_section
 }) {
 
-    useEffect(() => {
-        console.log('HOLAAAA')
-      }, []);
-
     const title = useRef(null);
     const desc = useRef(null);
     const image = useRef(null);
@@ -37,7 +33,8 @@ function EditSection({
     const delete_image = useRef(null);
     const md = useRef(null);
 
-    const [mdvalue, mdsetValue] = useState(edit_section?edit_section.desc:'');
+    const [mdvalue, mdsetValue] = useState('');
+    // useEffect(() => { mdsetValue(edit_section)}, [edit_section] )
     const [selectImage, setselectImage] = useState(false);
 
     const onSubmit = e =>{
@@ -52,14 +49,14 @@ function EditSection({
         }
         if (image_value || 
             title.current.value ||
-            desc.current.value || 
+            md.current.markdown || 
             code.current.value)
             {
                 setEditSection(
                     image_value,
                     section_id,
                     title.current.value,
-                    desc.current.value,
+                    md.current.markdown,
                     code.current.value,
                     checked_value                     
                 )
@@ -129,9 +126,9 @@ function EditSection({
                             />
                         <label className="form-label" htmlFor="form3Example3">Título de la Sección</label>
                     </div>                 
-                    <div className="form-outline mb-2">
+                    <div className="form-outline mb-2" data-color-mode="light">
                         <MDEditor
-                            value={mdvalue}
+                            value={mdvalue?mdvalue:edit_section?edit_section.desc:''}
                             autoFocus={false}
                             ref={md}
                             onChange={mdsetValue}

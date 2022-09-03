@@ -134,7 +134,7 @@ function PostProject({
                             <div className='mb-5'></div>
                             {/* Articulos creados del proyecto */}
                             {list_sections.map((section)=>(
-                            <div key={section.id} className={Edit?"card mb-5 p-1":"m-0 p-0"}>
+                            <div key={section.id} className={Edit?"card mb-5 p-1":"m-0 p-0"} data-color-mode="light">
                                 <section>
                                     {section.title?
                                         <h2 className="fw-bolder mb-3 mt-2">{section.title}</h2>

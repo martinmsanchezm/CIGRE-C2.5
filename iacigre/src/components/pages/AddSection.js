@@ -92,7 +92,7 @@ function AddSection({
                             />
                         <label className="form-label" htmlFor="form3Example3">Título de la Sección</label>
                     </div>                 
-                    <div className="form-outline mb-2">
+                    <div className="form-outline mb-2" data-color-mode="light">
                         <MDEditor
                             value={mdvalue}
                             autoFocus={false}
