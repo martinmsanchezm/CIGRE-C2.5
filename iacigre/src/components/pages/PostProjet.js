@@ -13,11 +13,10 @@ import {
 import { delete_unite, Set_view_unite_user, reset_unite_status } from '../../redux/actions/unite';
 import { useEffect, useState } from 'react';
 import '../../styles/line.css';
-import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from 'prism-react-renderer/themes/github';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faSquareCheck, faUserPlus, faUserXmark  } from "@fortawesome/free-solid-svg-icons";
 import { FaGithub } from 'react-icons/fa';
+import MDEditor from '@uiw/react-md-editor';
 
 function PostProject({
     post_project,
@@ -133,11 +132,8 @@ function PostProject({
                             <div className='mb-5'></div>
                             {/* Articulos creados del proyecto */}
                             {list_sections.map((section)=>(
-                            <div key={section.id} className={Edit?"card mb-5 p-1":"m-0 p-0"}>
+                            <div key={section.id} className={Edit?"card mb-5 p-1":"m-0 p-0"} data-color-mode="light">
                                 <section>
-                                    {section.title?
-                                        <h2 className="fw-bolder mb-3 mt-2">{section.title}</h2>
-                                    :null}
                                     {section.photo?
                                         <figure className="mb-3">
                                             <img className="img-fluid rounded" 
@@ -147,22 +143,8 @@ function PostProject({
                                         </figure>
                                     :null}
                                     {section.desc?
-                                        <p className="fs-5 mb-3">{section.desc}</p>
-                                    :null}
-                                    {section.code?
-                                        <Highlight {...defaultProps}  code={`${section.code}`} language="python" theme={theme}>
-                                            {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                                            <pre className={className} style={style}>
-                                                {tokens.map((line, i) => (
-                                                <div {...getLineProps({ line, key: i })}>
-                                                    {line.map((token, key) => (
-                                                    <span {...getTokenProps({ token, key })} />
-                                                    ))}
-                                                </div>
-                                                ))}
-                                            </pre>
-                                            )}
-                                        </Highlight>
+                                        //<p className="fs-5 mb-3">{section.desc}</p>
+                                        <MDEditor.Markdown source={section.desc} escapeHtml={true} skipHtml={true} transformLinkUri={null} />
                                     :null}                                    
                                     {((post_project.status || post_project.status_unite) && Edit)?
                                         <div className="divider">

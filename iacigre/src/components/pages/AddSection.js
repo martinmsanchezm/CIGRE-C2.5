@@ -6,9 +6,10 @@ import {
     reset_section_status,
     get_sections
 } from '../../redux/actions/section';
-import { useRef} from 'react';
+import { useRef, useState} from 'react';
 import { Oval } from 'react-loader-spinner';
 import { setAlert } from '../../redux/actions/alert';
+import MDEditor from '@uiw/react-md-editor';
 
 function AddSection({
     show,
@@ -22,26 +23,24 @@ function AddSection({
     get_sections
 }) {
 
-    const title = useRef(null);
-    const desc = useRef(null);
     const image = useRef(null);
-    const code = useRef(null);
+    const md = useRef(null);
+
+    const [mdvalue, mdsetValue] = useState("");
     
     const onSubmit = e =>{
         e.preventDefault();
         const image_value = image.current.files.length? image.current.files[0]:null
         const post_prj_id = post_project.id 
         if (image_value || 
-            title.current.value ||
-            desc.current.value || 
-            code.current.value)
+            md.current.markdown)
             {
                 setAddSection(
                     image_value,
                     post_prj_id,
-                    title.current.value,
-                    desc.current.value,
-                    code.current.value 
+                    "",
+                    md.current.markdown,
+                    "" 
                 )
         }else{
             setAlert(true,'Error, debe agregar al menos un elemento', '#fcbfbf')
@@ -77,32 +76,16 @@ function AddSection({
                     <h6>Upload a photo...</h6>                
                     <div className="ml-2 mr-2 col-lg-12 mb-4">
                         <input ref={image} type="file" className="form-control"/>
-                    </div>   
-                    <div className="form-outline mb-2">
-                            <input 
-                                className="form-control" 
-                                ref={title}
-                                type="text"
-                                maxLength={200}
-                            />
-                        <label className="form-label" htmlFor="form3Example3">Título de la Sección</label>
-                    </div>                 
-                    <div className="form-outline mb-2">
-                        <textarea 
-                                className="form-control" 
-                                ref={desc}
-                                type="text-area"
-                            />
-                        <label className="form-label" htmlFor="form3Example3">Descripción de la Sección</label>
-                    </div>
-                    <div className="form-outline mb-2">
-                        <textarea 
-                                className="form-control" 
-                                ref={code}
-                                type="text-area"
-                            />
-                        <label className="form-label" htmlFor="form3Example3">Código de la Sección</label>
-                    </div>                     
+                    </div>                
+                    <div className="form-outline mb-2" data-color-mode="light">
+                        <MDEditor
+                            value={mdvalue}
+                            autoFocus={false}
+                            ref={md}
+                            onChange={mdsetValue}
+                            previewOptions={{ skipHtml: true, escapeHtml: true, transformLinkUri: null, linkTarget: '_blank' }}
+                        />
+                    </div>                
                     <div>
                         {/* <!-- Submit button --> */}
                         {loading?
