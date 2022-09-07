@@ -57,22 +57,26 @@ function EditSection({
         }else{
             setAlert(true,'Error, debe agregar al menos un elemento', '#fcbfbf')
         }
+        mdsetValue('')
     }  
 
     if (!loading && editSectionStatus){
         Set_view_edit_section(false)
         reset_section_status()
         get_sections(post_project.id)
+        mdsetValue('')
     }
 
     const handleClose = (e) =>{
         Set_view_edit_section(false)
         setselectImage(false)
+        mdsetValue('')
     }
 
     const onDelete = (e) =>{
         e.preventDefault();
         delete_edit_section(edit_section.id)
+        mdsetValue('')
     }
 
     const onPrevent = (e) =>{
