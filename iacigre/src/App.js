@@ -18,7 +18,7 @@ import PostProjet from './components/pages/PostProjet';
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename='/iacigre'>
           <Routes>
             {/* Error Display */}
             <Route path="*" element={<Error404/>}/>
