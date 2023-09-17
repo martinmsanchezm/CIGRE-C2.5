@@ -36,5 +36,5 @@ venv/
 /db.sqlite3
 __pycache__/
 /core/.env
-*py[cod]
+*.py[cod]
 migrations/
