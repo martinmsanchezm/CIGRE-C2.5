@@ -1,4 +1,4 @@
-# CigreC2.5
+# CIGRE-C2.5
 
 **Web platform for the CIGRE C2.5 working group to publish and collaborate on artificial-intelligence projects applied to electrical power systems.**
 
@@ -63,7 +63,7 @@ flowchart LR
 ## Project Structure
 
 ```text
-CigreC2.5/
+CIGRE-C2.5/
 ├── requirements.txt          # Python dependencies
 ├── LICENSE                   # MIT
 └── iacigre/
@@ -106,9 +106,11 @@ CigreC2.5/
 - Node.js and `npm`
 - PostgreSQL, only if you don't use SQLite
 
-### 1. Backend dependencies
+### 1. Clone and install backend dependencies
 
 ```bash
+git clone https://github.com/nensanc/CIGRE-C2.5.git
+cd CIGRE-C2.5
 pip install -r requirements.txt
 ```
 
