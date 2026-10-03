@@ -109,7 +109,7 @@ CIGRE-C2.5/
 ### 1. Clone and install backend dependencies
 
 ```bash
-git clone https://github.com/nensanc/CIGRE-C2.5.git
+git clone https://github.com/martinmsanchezm/CIGRE-C2.5.git
 cd CIGRE-C2.5
 pip install -r requirements.txt
 ```
@@ -178,7 +178,7 @@ To work on the frontend only, run `npm start` (port 3000) with `REACT_APP_API_UR
 
 ## Author
 
-**Martin Sanchez** ([@nensanc](https://github.com/nensanc))
+**Martin Sanchez** ([@martinmsanchezm](https://github.com/martinmsanchezm))
 
 ## License
 
